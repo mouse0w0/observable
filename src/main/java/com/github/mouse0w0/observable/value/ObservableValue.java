@@ -1,8 +1,6 @@
 package com.github.mouse0w0.observable.value;
 
-import com.github.mouse0w0.lib4j.observable.Observable;
-
-public interface ObservableValue<T> extends Observable {
+public interface ObservableValue<T> {
 
     T getValue();
 
