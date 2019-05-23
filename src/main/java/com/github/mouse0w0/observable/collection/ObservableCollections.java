@@ -30,6 +30,14 @@ public final class ObservableCollections {
         return new UnmodifiableObservableMap<>(map);
     }
 
+    public static <E> ObservableQueue<E> observableQueue(Queue<E> queue) {
+        return new ObservableQueueWrapper<>(queue);
+    }
+
+    public static <E> ObservableQueue<E> unmodifiableObservableSet(ObservableQueue<E> queue) {
+        return new UnmodifiableObservableQueue<>(queue);
+    }
+
     private static class UnmodifiableObservableList<E> extends AbstractList<E> implements ObservableList<E> {
 
         private final ObservableList<E> list;
@@ -204,6 +212,50 @@ public final class ObservableCollections {
         @Override
         public void removeChangeListener(MapChangeListener<? super K, ? super V> listener) {
             map.removeChangeListener(listener);
+        }
+    }
+
+    private static class UnmodifiableObservableQueue<E> extends AbstractQueue<E> implements ObservableQueue<E> {
+
+        private final ObservableQueue<E> queue;
+
+        public UnmodifiableObservableQueue(ObservableQueue<E> queue) {
+            this.queue = queue;
+        }
+
+        @Override
+        public void addChangeListener(QueueChangeListener<? super E> listener) {
+            queue.addChangeListener(listener);
+        }
+
+        @Override
+        public void removeChangeListener(QueueChangeListener<? super E> listener) {
+            queue.removeChangeListener(listener);
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return queue.iterator();
+        }
+
+        @Override
+        public int size() {
+            return queue.size();
+        }
+
+        @Override
+        public boolean offer(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E poll() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E peek() {
+            return queue.peek();
         }
     }
 }

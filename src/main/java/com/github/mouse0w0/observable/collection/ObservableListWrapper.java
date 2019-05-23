@@ -22,7 +22,7 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
         listeners.remove(listener);
     }
 
-    protected void fireChangeListener(ListChangeListener.Change<? super E> change) {
+    protected void notifyChanged(ListChangeListener.Change<? super E> change) {
         for (ListChangeListener listener : listeners) {
             listener.onChanged(change);
         }
@@ -31,27 +31,27 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public E set(int index, E element) {
         E removed = list.set(index, element);
-        fireChangeListener(new ReplacedChange(Collections.singletonList(element), Collections.singletonList(removed)));
+        notifyChanged(new ReplacedChange(Collections.singletonList(element), Collections.singletonList(removed)));
         return removed;
     }
 
     @Override
     public void add(int index, E element) {
         list.add(index, element);
-        fireChangeListener(new AddedChange(Collections.singletonList(element)));
+        notifyChanged(new AddedChange(Collections.singletonList(element)));
     }
 
     @Override
     public E remove(int index) {
         E element = list.remove(index);
-        fireChangeListener(new RemovedChange(Collections.singletonList(element)));
+        notifyChanged(new RemovedChange(Collections.singletonList(element)));
         return element;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
         if (list.addAll(c)) {
-            fireChangeListener(new AddedChange(new ArrayList<>(c)));
+            notifyChanged(new AddedChange(new ArrayList<>(c)));
             return true;
         }
         return false;
@@ -60,7 +60,7 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
         if (list.addAll(index, c)) {
-            fireChangeListener(new AddedChange(new ArrayList<>(c)));
+            notifyChanged(new AddedChange(new ArrayList<>(c)));
             return true;
         }
         return false;
@@ -69,7 +69,7 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public boolean removeAll(Collection<?> c) {
         if (list.removeAll(c)) {
-            fireChangeListener(new RemovedChange(new ArrayList<>((Collection<E>) c)));
+            notifyChanged(new RemovedChange(new ArrayList<>((Collection<E>) c)));
             return true;
         }
         return false;
@@ -78,7 +78,7 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public boolean add(E e) {
         if (list.add(e)) {
-            fireChangeListener(new AddedChange(Collections.singletonList(e)));
+            notifyChanged(new AddedChange(Collections.singletonList(e)));
             return true;
         }
         return false;
@@ -87,7 +87,7 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public boolean remove(Object o) {
         if (list.remove(o)) {
-            fireChangeListener(new AddedChange(Collections.singletonList((E) o)));
+            notifyChanged(new AddedChange(Collections.singletonList((E) o)));
             return true;
         }
         return false;
@@ -96,7 +96,7 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public void clear() {
         list.clear();
-        fireChangeListener(new RemovedChange(this));
+        notifyChanged(new RemovedChange(this));
     }
 
     @Override

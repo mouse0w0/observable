@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ObservableSetWrapper<E> extends AbstractSet<E> implements ObservableSet<E> {
 
-    private final List<SetChangeListener<? super E>> changeListeners = new LinkedList<>();
+    private final List<SetChangeListener<? super E>> listeners = new LinkedList<>();
     private final Set<E> set;
 
     public ObservableSetWrapper(Set<E> set) {
@@ -14,16 +14,16 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
     @Override
     public void addChangeListener(SetChangeListener<? super E> listener) {
         Objects.requireNonNull(listener);
-        changeListeners.add(listener);
+        listeners.add(listener);
     }
 
     @Override
     public void removeChangeListener(SetChangeListener<? super E> listener) {
-        changeListeners.remove(listener);
+        listeners.remove(listener);
     }
 
-    protected void fireChangeListener(SetChangeListener.Change<? super E> change) {
-        for (SetChangeListener listener : changeListeners) {
+    protected void notifyChanged(SetChangeListener.Change<? super E> change) {
+        for (SetChangeListener listener : listeners) {
             listener.onChanged(change);
         }
     }
@@ -31,7 +31,7 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
     @Override
     public boolean add(E e) {
         if (super.add(e)) {
-            fireChangeListener(new AddedChange(e));
+            notifyChanged(new AddedChange(e));
             return true;
         }
         return false;
@@ -58,7 +58,7 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
             @Override
             public void remove() {
                 iterator.remove();
-                fireChangeListener(new RemovedChange(lastElement));
+                notifyChanged(new RemovedChange(lastElement));
             }
         };
     }

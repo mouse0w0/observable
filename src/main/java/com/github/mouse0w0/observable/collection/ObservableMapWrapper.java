@@ -8,7 +8,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
     private ObservableKeySet keySet;
     private ObservableValues values;
 
-    private final List<MapChangeListener<? super K, ? super V>> changeListeners = new LinkedList<>();
+    private final List<MapChangeListener<? super K, ? super V>> listeners = new LinkedList<>();
 
     private final Map<K, V> map;
 
@@ -59,8 +59,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         }
     }
 
-    protected void fireChangeListener(MapChangeListener.Change<K, V> change) {
-        for (MapChangeListener listener : changeListeners) {
+    protected void notifyChanged(MapChangeListener.Change<? super K, ? super V> change) {
+        for (MapChangeListener listener : listeners) {
             listener.onChanged(change);
         }
     }
@@ -68,12 +68,12 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
     @Override
     public void addChangeListener(MapChangeListener<? super K, ? super V> listener) {
         Objects.requireNonNull(listener);
-        changeListeners.add(listener);
+        listeners.add(listener);
     }
 
     @Override
     public void removeChangeListener(MapChangeListener<? super K, ? super V> listener) {
-        changeListeners.remove(listener);
+        listeners.remove(listener);
     }
 
     @Override
@@ -107,11 +107,11 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         if (map.containsKey(key)) {
             ret = map.put(key, value);
             if (ret == null && value != null || ret != null && !ret.equals(value)) {
-                fireChangeListener(new SimpleChange(key, ret, value, true, true));
+                notifyChanged(new SimpleChange(key, ret, value, true, true));
             }
         } else {
             ret = map.put(key, value);
-            fireChangeListener(new SimpleChange(key, ret, value, true, false));
+            notifyChanged(new SimpleChange(key, ret, value, true, false));
         }
         return ret;
     }
@@ -123,7 +123,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
             return null;
         }
         V ret = map.remove(key);
-        fireChangeListener(new SimpleChange((K) key, ret, null, false, true));
+        notifyChanged(new SimpleChange((K) key, ret, null, false, true));
         return ret;
     }
 
@@ -141,7 +141,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
             K key = e.getKey();
             V val = e.getValue();
             i.remove();
-            fireChangeListener(new SimpleChange(key, val, null, false, true));
+            notifyChanged(new SimpleChange(key, val, null, false, true));
         }
     }
 
@@ -225,7 +225,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                 @Override
                 public void remove() {
                     entryIt.remove();
-                    fireChangeListener(new SimpleChange(lastKey, lastValue, null, false, true));
+                    notifyChanged(new SimpleChange(lastKey, lastValue, null, false, true));
                 }
 
             };
@@ -275,7 +275,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                     K key = e.getKey();
                     V value = e.getValue();
                     i.remove();
-                    fireChangeListener(new SimpleChange(key, value, null, false, true));
+                    notifyChanged(new SimpleChange(key, value, null, false, true));
                 }
             }
             return removed;
@@ -349,7 +349,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                 @Override
                 public void remove() {
                     entryIt.remove();
-                    fireChangeListener(new SimpleChange(lastKey, lastValue, null, false, true));
+                    notifyChanged(new SimpleChange(lastKey, lastValue, null, false, true));
                 }
 
             };
@@ -405,7 +405,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                     K key = e.getKey();
                     V value = e.getValue();
                     i.remove();
-                    fireChangeListener(new SimpleChange(key, value, null, false, true));
+                    notifyChanged(new SimpleChange(key, value, null, false, true));
                 }
             }
             return removed;
@@ -460,7 +460,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         @Override
         public V setValue(V value) {
             V oldValue = backingEntry.setValue(value);
-            fireChangeListener(new SimpleChange(getKey(), oldValue, value, true, true));
+            notifyChanged(new SimpleChange(getKey(), oldValue, value, true, true));
             return oldValue;
         }
 
@@ -536,7 +536,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                 @Override
                 public void remove() {
                     backingIt.remove();
-                    fireChangeListener(new SimpleChange(lastKey, lastValue, null, false, true));
+                    notifyChanged(new SimpleChange(lastKey, lastValue, null, false, true));
                 }
             };
         }
@@ -572,7 +572,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
             boolean ret = map.entrySet().remove(o);
             if (ret) {
                 Entry<K, V> entry = (Entry<K, V>) o;
-                fireChangeListener(new SimpleChange(entry.getKey(), entry.getValue(), null, false, true));
+                notifyChanged(new SimpleChange(entry.getKey(), entry.getValue(), null, false, true));
             }
             return ret;
         }
@@ -601,7 +601,7 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                     K key = e.getKey();
                     V value = e.getValue();
                     i.remove();
-                    fireChangeListener(new SimpleChange(key, value, null, false, true));
+                    notifyChanged(new SimpleChange(key, value, null, false, true));
                 }
             }
             return removed;
