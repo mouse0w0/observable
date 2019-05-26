@@ -61,9 +61,7 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
     @Override
     public E remove() {
         E e = queue.remove();
-        if (e != null) {
-            notifyChanged(new RemovedChange(Collections.singletonList(e)));
-        }
+        notifyChanged(new RemovedChange(e));
         return e;
     }
 
@@ -106,9 +104,13 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
         }
     }
 
-    private class AddedChange extends QueueChangeListener.Change<E> {
+    protected class AddedChange extends QueueChangeListener.Change<E> {
 
         private final List<E> added;
+
+        public AddedChange(E added) {
+            this(Collections.singletonList(added));
+        }
 
         public AddedChange(List<E> added) {
             super(ObservableQueueWrapper.this);
@@ -136,9 +138,13 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
         }
     }
 
-    private class RemovedChange extends QueueChangeListener.Change<E> {
+    protected class RemovedChange extends QueueChangeListener.Change<E> {
 
         private final List<E> removed;
+
+        public RemovedChange(E removed) {
+            this(Collections.singletonList(removed));
+        }
 
         public RemovedChange(List<E> removed) {
             super(ObservableQueueWrapper.this);

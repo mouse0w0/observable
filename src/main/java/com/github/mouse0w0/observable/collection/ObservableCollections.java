@@ -34,8 +34,16 @@ public final class ObservableCollections {
         return new ObservableQueueWrapper<>(queue);
     }
 
-    public static <E> ObservableQueue<E> unmodifiableObservableSet(ObservableQueue<E> queue) {
+    public static <E> ObservableQueue<E> unmodifiableObservableQueue(ObservableQueue<E> queue) {
         return new UnmodifiableObservableQueue<>(queue);
+    }
+
+    public static <E> ObservableDeque<E> observableDeque(Deque<E> deque) {
+        return new ObservableDequeWrapper<>(deque);
+    }
+
+    public static <E> ObservableDeque<E> unmodifiableObservableDeque(ObservableDeque<E> deque) {
+        return new UnmodifiableObservableDeque<>(deque);
     }
 
     private static class UnmodifiableObservableList<E> extends AbstractList<E> implements ObservableList<E> {
@@ -256,6 +264,101 @@ public final class ObservableCollections {
         @Override
         public E peek() {
             return queue.peek();
+        }
+    }
+
+    private static class UnmodifiableObservableDeque<E> extends UnmodifiableObservableQueue<E> implements ObservableDeque<E> {
+
+        private final ObservableDeque<E> deque;
+
+        public UnmodifiableObservableDeque(ObservableDeque<E> deque) {
+            super(deque);
+            this.deque = deque;
+        }
+
+        @Override
+        public void addFirst(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void addLast(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean offerFirst(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean offerLast(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E removeFirst() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E removeLast() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E pollFirst() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E pollLast() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E getFirst() {
+            return deque.getFirst();
+        }
+
+        @Override
+        public E getLast() {
+            return deque.getLast();
+        }
+
+        @Override
+        public E peekFirst() {
+            return deque.peekFirst();
+        }
+
+        @Override
+        public E peekLast() {
+            return deque.peekLast();
+        }
+
+        @Override
+        public boolean removeFirstOccurrence(Object o) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean removeLastOccurrence(Object o) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void push(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public E pop() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Iterator<E> descendingIterator() {
+            return deque.descendingIterator();
         }
     }
 }
