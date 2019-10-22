@@ -9,10 +9,10 @@ public interface MutableValue<T> extends ObservableValue<T> {
     ObservableValue<T> toImmutable();
 
     default void bindBidirectional(MutableValue<T> other) {
-        Bindings.bind(this, other);
+        Bindings.bindBidirectional(this, other);
     }
 
     default void unbindBidirectional(MutableValue<T> other) {
-        Bindings.unbind(this, other);
+        Bindings.unbindBidirectional(this, other);
     }
 }
