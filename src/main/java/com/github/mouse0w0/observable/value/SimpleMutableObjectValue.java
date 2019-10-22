@@ -3,7 +3,7 @@ package com.github.mouse0w0.observable.value;
 import java.util.Objects;
 import java.util.Optional;
 
-public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implements MutableValue<T> {
+public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implements MutableObjectValue<T> {
 
     private T value;
     private ImmutableObjectValue immutableValue;
@@ -35,14 +35,19 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
     }
 
     @Override
-    public ObservableValue<T> toImmutable() {
+    public ObservableObjectValue<T> toImmutable() {
         if (immutableValue == null) {
             immutableValue = new ImmutableObjectValue();
         }
         return immutableValue;
     }
 
-    private class ImmutableObjectValue implements ObservableValue<T> {
+    @Override
+    public void set(T value) {
+        setValue(value);
+    }
+
+    private class ImmutableObjectValue implements ObservableObjectValue<T> {
         @Override
         public T getValue() {
             return SimpleMutableObjectValue.this.getValue();
@@ -56,6 +61,11 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
         @Override
         public void removeChangeListener(ValueChangeListener<? super T> listener) {
             SimpleMutableObjectValue.this.removeChangeListener(listener);
+        }
+
+        @Override
+        public T get() {
+            return getValue();
         }
     }
 }
