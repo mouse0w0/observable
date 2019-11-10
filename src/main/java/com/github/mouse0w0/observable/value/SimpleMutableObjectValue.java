@@ -15,8 +15,9 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
         this.value = value;
     }
 
-    public Optional<T> get() {
-        return Optional.ofNullable(getValue());
+    @Override
+    public T get() {
+        return getValue();
     }
 
     @Override
