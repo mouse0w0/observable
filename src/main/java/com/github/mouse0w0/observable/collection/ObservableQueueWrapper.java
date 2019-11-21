@@ -104,6 +104,11 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
         }
     }
 
+    @Override
+    public String toString() {
+        return queue.toString();
+    }
+
     protected class AddedChange extends QueueChangeListener.Change<E> {
 
         private final List<E> added;

@@ -144,6 +144,11 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
         return list.containsAll(c);
     }
 
+    @Override
+    public String toString() {
+        return list.toString();
+    }
+
     private class AddedChange extends ListChangeListener.Change<E> {
 
         private final List<E> added;

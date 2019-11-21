@@ -73,6 +73,11 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
         set.clear();
     }
 
+    @Override
+    public String toString() {
+        return set.toString();
+    }
+
     private class AddedChange extends SetChangeListener.Change<E> {
 
         private final E element;

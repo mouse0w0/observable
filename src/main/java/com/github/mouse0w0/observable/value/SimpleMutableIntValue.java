@@ -77,6 +77,13 @@ public class SimpleMutableIntValue extends ObservableValueBase<Integer> implemen
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "SimpleMutableIntValue{" +
+                "value=" + value +
+                '}';
+    }
+
     private class ImmutableIntValue implements ObservableIntValue {
         @Override
         public int get() {
@@ -126,6 +133,13 @@ public class SimpleMutableIntValue extends ObservableValueBase<Integer> implemen
         @Override
         public void removeChangeListener(ValueChangeListener<? super Integer> listener) {
             SimpleMutableIntValue.this.removeChangeListener(listener);
+        }
+
+        @Override
+        public String toString() {
+            return "ImmutableIntValue{" +
+                    "value=" + value +
+                    '}';
         }
     }
 }

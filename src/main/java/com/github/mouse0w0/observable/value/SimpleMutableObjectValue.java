@@ -1,7 +1,6 @@
 package com.github.mouse0w0.observable.value;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implements MutableObjectValue<T> {
 
@@ -48,6 +47,13 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
         setValue(value);
     }
 
+    @Override
+    public String toString() {
+        return "SimpleMutableObjectValue{" +
+                "value=" + value +
+                '}';
+    }
+
     private class ImmutableObjectValue implements ObservableObjectValue<T> {
         @Override
         public T getValue() {
@@ -67,6 +73,13 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
         @Override
         public T get() {
             return getValue();
+        }
+
+        @Override
+        public String toString() {
+            return "ImmutableObjectValue{" +
+                    "value=" + value +
+                    '}';
         }
     }
 }

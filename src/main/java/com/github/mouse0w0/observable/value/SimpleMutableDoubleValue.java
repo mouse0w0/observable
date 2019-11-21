@@ -77,6 +77,13 @@ public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implem
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "SimpleMutableDoubleValue{" +
+                "value=" + value +
+                '}';
+    }
+
     private class ImmutableDoubleValue implements ObservableDoubleValue {
         @Override
         public double get() {
@@ -126,6 +133,13 @@ public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implem
         @Override
         public void removeChangeListener(ValueChangeListener<? super Double> listener) {
             SimpleMutableDoubleValue.this.removeChangeListener(listener);
+        }
+
+        @Override
+        public String toString() {
+            return "ImmutableDoubleValue{" +
+                    "value=" + value +
+                    '}';
         }
     }
 }

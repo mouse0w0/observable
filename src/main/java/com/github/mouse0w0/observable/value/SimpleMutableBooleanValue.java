@@ -47,6 +47,13 @@ public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> impl
         fireValueChangeEvent(oldValue, value);
     }
 
+    @Override
+    public String toString() {
+        return "SimpleMutableBooleanValue{" +
+                "value=" + value +
+                '}';
+    }
+
     private class ImmutableBooleanValue implements ObservableBooleanValue {
         @Override
         public boolean get() {
@@ -66,6 +73,13 @@ public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> impl
         @Override
         public void removeChangeListener(ValueChangeListener<? super Boolean> listener) {
             SimpleMutableBooleanValue.this.removeChangeListener(listener);
+        }
+
+        @Override
+        public String toString() {
+            return "ImmutableBooleanValue{" +
+                    "value=" + value +
+                    '}';
         }
     }
 }

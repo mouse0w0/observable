@@ -77,6 +77,13 @@ public class SimpleMutableLongValue extends ObservableValueBase<Long> implements
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "SimpleMutableLongValue{" +
+                "value=" + value +
+                '}';
+    }
+
     private class ImmutableLongValue implements ObservableLongValue {
         @Override
         public long get() {
@@ -126,6 +133,13 @@ public class SimpleMutableLongValue extends ObservableValueBase<Long> implements
         @Override
         public void removeChangeListener(ValueChangeListener<? super Long> listener) {
             SimpleMutableLongValue.this.removeChangeListener(listener);
+        }
+
+        @Override
+        public String toString() {
+            return "ImmutableLongValue{" +
+                    "value=" + value +
+                    '}';
         }
     }
 }

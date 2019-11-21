@@ -77,6 +77,13 @@ public class SimpleMutableFloatValue extends ObservableValueBase<Float> implemen
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "SimpleMutableFloatValue{" +
+                "value=" + value +
+                '}';
+    }
+
     private class ImmutableFloatValue implements ObservableFloatValue {
         @Override
         public float get() {
@@ -126,6 +133,13 @@ public class SimpleMutableFloatValue extends ObservableValueBase<Float> implemen
         @Override
         public void removeChangeListener(ValueChangeListener<? super Float> listener) {
             SimpleMutableFloatValue.this.removeChangeListener(listener);
+        }
+
+        @Override
+        public String toString() {
+            return "ImmutableFloatValue{" +
+                    "value=" + value +
+                    '}';
         }
     }
 }

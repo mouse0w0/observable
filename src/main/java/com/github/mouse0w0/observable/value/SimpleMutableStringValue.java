@@ -47,6 +47,13 @@ public class SimpleMutableStringValue extends ObservableValueBase<String> implem
         setValue(value);
     }
 
+    @Override
+    public String toString() {
+        return "SimpleMutableStringValue{" +
+                "value='" + value + '\'' +
+                '}';
+    }
+
     private class ImmutableStringValue implements ObservableStringValue {
         @Override
         public String getValue() {
@@ -66,6 +73,13 @@ public class SimpleMutableStringValue extends ObservableValueBase<String> implem
         @Override
         public String get() {
             return getValue();
+        }
+
+        @Override
+        public String toString() {
+            return "ImmutableStringValue{" +
+                    "value=" + value +
+                    '}';
         }
     }
 }

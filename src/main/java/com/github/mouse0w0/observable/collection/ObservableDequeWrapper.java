@@ -131,4 +131,9 @@ public class ObservableDequeWrapper<E> extends ObservableQueueWrapper<E> impleme
     public Iterator<E> descendingIterator() {
         return deque.descendingIterator();
     }
+
+    @Override
+    public String toString() {
+        return deque.toString();
+    }
 }
