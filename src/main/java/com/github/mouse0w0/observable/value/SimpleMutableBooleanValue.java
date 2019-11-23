@@ -5,7 +5,7 @@ import java.util.Objects;
 public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> implements MutableBooleanValue {
 
     private boolean value;
-    private ImmutableBooleanValue immutableBooleanValue;
+    private UnmodifiableBooleanValue unmodifiableBooleanValue;
 
     public SimpleMutableBooleanValue() {
     }
@@ -21,10 +21,10 @@ public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> impl
     }
 
     @Override
-    public ObservableBooleanValue toImmutable() {
-        if (immutableBooleanValue == null)
-            immutableBooleanValue = new ImmutableBooleanValue();
-        return immutableBooleanValue;
+    public ObservableBooleanValue toUnmodifiable() {
+        if (unmodifiableBooleanValue == null)
+            unmodifiableBooleanValue = new UnmodifiableBooleanValue();
+        return unmodifiableBooleanValue;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> impl
                 '}';
     }
 
-    private class ImmutableBooleanValue implements ObservableBooleanValue {
+    private class UnmodifiableBooleanValue implements ObservableBooleanValue {
         @Override
         public boolean get() {
             return SimpleMutableBooleanValue.this.get();
@@ -77,7 +77,7 @@ public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> impl
 
         @Override
         public String toString() {
-            return "ImmutableBooleanValue{" +
+            return "UnmodifiableBooleanValue{" +
                     "value=" + value +
                     '}';
         }

@@ -4,5 +4,5 @@ public interface MutableIntValue extends MutableNumberValue<Integer>, Observable
 
     void set(int value);
 
-    ObservableIntValue toImmutable();
+    ObservableIntValue toUnmodifiable();
 }

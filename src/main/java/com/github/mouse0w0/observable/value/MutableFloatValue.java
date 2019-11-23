@@ -4,5 +4,5 @@ public interface MutableFloatValue extends MutableNumberValue<Float>, Observable
 
     void set(float value);
 
-    ObservableFloatValue toImmutable();
+    ObservableFloatValue toUnmodifiable();
 }

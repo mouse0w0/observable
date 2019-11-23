@@ -5,7 +5,7 @@ import java.util.Objects;
 public class SimpleMutableLongValue extends ObservableValueBase<Long> implements MutableLongValue {
 
     private long value;
-    private ImmutableLongValue immutableLongValue;
+    private UnmodifiableLongValue unmodifiableLongValue;
 
     public SimpleMutableLongValue() {
     }
@@ -31,10 +31,10 @@ public class SimpleMutableLongValue extends ObservableValueBase<Long> implements
     }
 
     @Override
-    public ObservableLongValue toImmutable() {
-        if (immutableLongValue == null)
-            immutableLongValue = new ImmutableLongValue();
-        return immutableLongValue;
+    public ObservableLongValue toUnmodifiable() {
+        if (unmodifiableLongValue == null)
+            unmodifiableLongValue = new UnmodifiableLongValue();
+        return unmodifiableLongValue;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SimpleMutableLongValue extends ObservableValueBase<Long> implements
                 '}';
     }
 
-    private class ImmutableLongValue implements ObservableLongValue {
+    private class UnmodifiableLongValue implements ObservableLongValue {
         @Override
         public long get() {
             return SimpleMutableLongValue.this.get();
@@ -137,7 +137,7 @@ public class SimpleMutableLongValue extends ObservableValueBase<Long> implements
 
         @Override
         public String toString() {
-            return "ImmutableLongValue{" +
+            return "UnmodifiableLongValue{" +
                     "value=" + value +
                     '}';
         }

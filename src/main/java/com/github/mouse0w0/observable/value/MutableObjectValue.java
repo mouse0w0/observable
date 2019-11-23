@@ -4,5 +4,5 @@ public interface MutableObjectValue<T> extends ObservableObjectValue<T>, Mutable
 
     void set(T value);
 
-    ObservableObjectValue<T> toImmutable();
+    ObservableObjectValue<T> toUnmodifiable();
 }

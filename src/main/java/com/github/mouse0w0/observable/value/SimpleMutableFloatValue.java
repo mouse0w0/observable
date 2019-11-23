@@ -5,7 +5,7 @@ import java.util.Objects;
 public class SimpleMutableFloatValue extends ObservableValueBase<Float> implements MutableFloatValue {
 
     private float value;
-    private ImmutableFloatValue immutableFloatValue;
+    private UnmodifiableFloatValue unmodifiableFloatValue;
 
     public SimpleMutableFloatValue() {
     }
@@ -31,10 +31,10 @@ public class SimpleMutableFloatValue extends ObservableValueBase<Float> implemen
     }
 
     @Override
-    public ObservableFloatValue toImmutable() {
-        if (immutableFloatValue == null)
-            immutableFloatValue = new ImmutableFloatValue();
-        return immutableFloatValue;
+    public ObservableFloatValue toUnmodifiable() {
+        if (unmodifiableFloatValue == null)
+            unmodifiableFloatValue = new UnmodifiableFloatValue();
+        return unmodifiableFloatValue;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SimpleMutableFloatValue extends ObservableValueBase<Float> implemen
                 '}';
     }
 
-    private class ImmutableFloatValue implements ObservableFloatValue {
+    private class UnmodifiableFloatValue implements ObservableFloatValue {
         @Override
         public float get() {
             return SimpleMutableFloatValue.this.get();
@@ -137,7 +137,7 @@ public class SimpleMutableFloatValue extends ObservableValueBase<Float> implemen
 
         @Override
         public String toString() {
-            return "ImmutableFloatValue{" +
+            return "UnmodifiableFloatValue{" +
                     "value=" + value +
                     '}';
         }

@@ -4,5 +4,5 @@ public interface MutableStringValue extends ObservableStringValue, MutableObject
 
     void set(String value);
 
-    ObservableStringValue toImmutable();
+    ObservableStringValue toUnmodifiable();
 }

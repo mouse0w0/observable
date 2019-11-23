@@ -4,5 +4,5 @@ public interface MutableDoubleValue extends MutableNumberValue<Double>, Observab
 
     void set(double value);
 
-    ObservableDoubleValue toImmutable();
+    ObservableDoubleValue toUnmodifiable();
 }

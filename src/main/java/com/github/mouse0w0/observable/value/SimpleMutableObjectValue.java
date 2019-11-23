@@ -5,7 +5,7 @@ import java.util.Objects;
 public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implements MutableObjectValue<T> {
 
     private T value;
-    private ImmutableObjectValue immutableValue;
+    private UnmodifiableObjectValue unmodifiableObjectValue;
 
     public SimpleMutableObjectValue() {
     }
@@ -35,11 +35,11 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
     }
 
     @Override
-    public ObservableObjectValue<T> toImmutable() {
-        if (immutableValue == null) {
-            immutableValue = new ImmutableObjectValue();
+    public ObservableObjectValue<T> toUnmodifiable() {
+        if (unmodifiableObjectValue == null) {
+            unmodifiableObjectValue = new UnmodifiableObjectValue();
         }
-        return immutableValue;
+        return unmodifiableObjectValue;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
                 '}';
     }
 
-    private class ImmutableObjectValue implements ObservableObjectValue<T> {
+    private class UnmodifiableObjectValue implements ObservableObjectValue<T> {
         @Override
         public T getValue() {
             return SimpleMutableObjectValue.this.getValue();
@@ -77,7 +77,7 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
 
         @Override
         public String toString() {
-            return "ImmutableObjectValue{" +
+            return "UnmodifiableObjectValue{" +
                     "value=" + value +
                     '}';
         }

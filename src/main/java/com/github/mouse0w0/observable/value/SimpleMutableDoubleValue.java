@@ -5,7 +5,7 @@ import java.util.Objects;
 public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implements MutableDoubleValue {
 
     private double value;
-    private ImmutableDoubleValue immutableDoubleValue;
+    private UnmodifiableDoubleValue unmodifiableDoubleValue;
 
     public SimpleMutableDoubleValue() {
     }
@@ -31,10 +31,10 @@ public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implem
     }
 
     @Override
-    public ObservableDoubleValue toImmutable() {
-        if (immutableDoubleValue == null)
-            immutableDoubleValue = new ImmutableDoubleValue();
-        return immutableDoubleValue;
+    public ObservableDoubleValue toUnmodifiable() {
+        if (unmodifiableDoubleValue == null)
+            unmodifiableDoubleValue = new UnmodifiableDoubleValue();
+        return unmodifiableDoubleValue;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implem
                 '}';
     }
 
-    private class ImmutableDoubleValue implements ObservableDoubleValue {
+    private class UnmodifiableDoubleValue implements ObservableDoubleValue {
         @Override
         public double get() {
             return SimpleMutableDoubleValue.this.get();
@@ -137,7 +137,7 @@ public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implem
 
         @Override
         public String toString() {
-            return "ImmutableDoubleValue{" +
+            return "UnmodifiableDoubleValue{" +
                     "value=" + value +
                     '}';
         }

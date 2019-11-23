@@ -4,5 +4,5 @@ public interface MutableLongValue extends MutableNumberValue<Long>, ObservableLo
 
     void set(long value);
 
-    ObservableLongValue toImmutable();
+    ObservableLongValue toUnmodifiable();
 }

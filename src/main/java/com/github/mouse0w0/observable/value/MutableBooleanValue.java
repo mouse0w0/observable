@@ -4,5 +4,5 @@ public interface MutableBooleanValue extends ObservableBooleanValue, MutableValu
 
     void set(boolean value);
 
-    ObservableBooleanValue toImmutable();
+    ObservableBooleanValue toUnmodifiable();
 }

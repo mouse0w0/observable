@@ -5,7 +5,7 @@ import java.util.Objects;
 public class SimpleMutableIntValue extends ObservableValueBase<Integer> implements MutableIntValue {
 
     private int value;
-    private ImmutableIntValue immutableIntValue;
+    private UnmodifiableIntValue unmodifiableIntValue;
 
     public SimpleMutableIntValue() {
     }
@@ -31,10 +31,10 @@ public class SimpleMutableIntValue extends ObservableValueBase<Integer> implemen
     }
 
     @Override
-    public ObservableIntValue toImmutable() {
-        if (immutableIntValue == null)
-            immutableIntValue = new ImmutableIntValue();
-        return immutableIntValue;
+    public ObservableIntValue toUnmodifiable() {
+        if (unmodifiableIntValue == null)
+            unmodifiableIntValue = new UnmodifiableIntValue();
+        return unmodifiableIntValue;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SimpleMutableIntValue extends ObservableValueBase<Integer> implemen
                 '}';
     }
 
-    private class ImmutableIntValue implements ObservableIntValue {
+    private class UnmodifiableIntValue implements ObservableIntValue {
         @Override
         public int get() {
             return SimpleMutableIntValue.this.get();
@@ -137,7 +137,7 @@ public class SimpleMutableIntValue extends ObservableValueBase<Integer> implemen
 
         @Override
         public String toString() {
-            return "ImmutableIntValue{" +
+            return "UnmodifiableIntValue{" +
                     "value=" + value +
                     '}';
         }

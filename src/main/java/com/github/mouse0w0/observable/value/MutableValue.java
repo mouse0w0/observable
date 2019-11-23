@@ -6,7 +6,7 @@ public interface MutableValue<T> extends ObservableValue<T> {
 
     void setValue(T value);
 
-    ObservableValue<T> toImmutable();
+    ObservableValue<T> toUnmodifiable();
 
     default void bindBidirectional(MutableValue<T> other) {
         Bindings.bindBidirectional(this, other);
