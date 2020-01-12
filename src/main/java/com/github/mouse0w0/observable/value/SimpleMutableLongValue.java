@@ -74,7 +74,7 @@ public class SimpleMutableLongValue extends ObservableValueBase<Long> implements
 
     @Override
     public Long getValue() {
-        return value;
+        return get();
     }
 
     @Override

@@ -74,7 +74,7 @@ public class SimpleMutableFloatValue extends ObservableValueBase<Float> implemen
 
     @Override
     public Float getValue() {
-        return value;
+        return get();
     }
 
     @Override

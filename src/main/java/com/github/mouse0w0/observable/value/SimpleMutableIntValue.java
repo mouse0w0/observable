@@ -74,7 +74,7 @@ public class SimpleMutableIntValue extends ObservableValueBase<Integer> implemen
 
     @Override
     public Integer getValue() {
-        return value;
+        return get();
     }
 
     @Override

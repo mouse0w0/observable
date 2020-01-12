@@ -74,7 +74,7 @@ public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implem
 
     @Override
     public Double getValue() {
-        return value;
+        return get();
     }
 
     @Override

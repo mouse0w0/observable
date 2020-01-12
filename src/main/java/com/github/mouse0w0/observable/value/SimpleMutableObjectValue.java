@@ -16,22 +16,17 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
 
     @Override
     public T get() {
-        return getValue();
-    }
-
-    @Override
-    public T getValue() {
         return value;
     }
 
     @Override
+    public T getValue() {
+        return get();
+    }
+
+    @Override
     public void setValue(T value) {
-        if (Objects.equals(this.value, value)) {
-            return;
-        }
-        T oldValue = this.value;
-        this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        set(value);
     }
 
     @Override
@@ -44,7 +39,12 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
 
     @Override
     public void set(T value) {
-        setValue(value);
+        if (Objects.equals(this.value, value)) {
+            return;
+        }
+        T oldValue = this.value;
+        this.value = value;
+        fireValueChangeEvent(oldValue, value);
     }
 
     @Override

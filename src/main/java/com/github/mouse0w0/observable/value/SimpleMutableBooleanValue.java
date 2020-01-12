@@ -34,7 +34,7 @@ public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> impl
 
     @Override
     public Boolean getValue() {
-        return value;
+        return get();
     }
 
     @Override

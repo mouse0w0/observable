@@ -16,22 +16,17 @@ public class SimpleMutableStringValue extends ObservableValueBase<String> implem
 
     @Override
     public String get() {
-        return getValue();
-    }
-
-    @Override
-    public String getValue() {
         return value;
     }
 
     @Override
+    public String getValue() {
+        return get();
+    }
+
+    @Override
     public void setValue(String value) {
-        if (Objects.equals(this.value, value)) {
-            return;
-        }
-        String oldValue = this.value;
-        this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        set(value);
     }
 
     @Override
@@ -44,7 +39,12 @@ public class SimpleMutableStringValue extends ObservableValueBase<String> implem
 
     @Override
     public void set(String value) {
-        setValue(value);
+        if (Objects.equals(this.value, value)) {
+            return;
+        }
+        String oldValue = this.value;
+        this.value = value;
+        fireValueChangeEvent(oldValue, value);
     }
 
     @Override
