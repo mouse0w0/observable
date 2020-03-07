@@ -21,7 +21,7 @@ public class SimpleMutableIntValue extends ObservableValueBase<Integer> implemen
         }
         int oldValue = this.value;
         this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        fireValueChangedEvent(oldValue, value);
     }
 
     @Override

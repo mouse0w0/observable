@@ -44,7 +44,7 @@ public class SimpleMutableObjectValue<T> extends ObservableValueBase<T> implemen
         }
         T oldValue = this.value;
         this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        fireValueChangedEvent(oldValue, value);
     }
 
     @Override

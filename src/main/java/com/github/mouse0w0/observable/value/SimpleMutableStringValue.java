@@ -44,7 +44,7 @@ public class SimpleMutableStringValue extends ObservableValueBase<String> implem
         }
         String oldValue = this.value;
         this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        fireValueChangedEvent(oldValue, value);
     }
 
     @Override

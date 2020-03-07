@@ -16,12 +16,12 @@ public class SimpleMutableDoubleValue extends ObservableValueBase<Double> implem
 
     @Override
     public void set(double value) {
-        if (Double.compare(this.value, value) == 0) {
+        if (this.value == value) {
             return;
         }
         double oldValue = this.value;
         this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        fireValueChangedEvent(oldValue, value);
     }
 
     @Override

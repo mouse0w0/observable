@@ -44,7 +44,7 @@ public class SimpleMutableBooleanValue extends ObservableValueBase<Boolean> impl
         }
         boolean oldValue = this.value;
         this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        fireValueChangedEvent(oldValue, value);
     }
 
     @Override

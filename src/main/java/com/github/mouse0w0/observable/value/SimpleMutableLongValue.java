@@ -21,7 +21,7 @@ public class SimpleMutableLongValue extends ObservableValueBase<Long> implements
         }
         long oldValue = this.value;
         this.value = value;
-        fireValueChangeEvent(oldValue, value);
+        fireValueChangedEvent(oldValue, value);
     }
 
     @Override
