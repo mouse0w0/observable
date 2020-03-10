@@ -87,7 +87,7 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public boolean remove(Object o) {
         if (list.remove(o)) {
-            notifyChanged(new AddedChange((E) o));
+            notifyChanged(new RemovedChange((E) o));
             return true;
         }
         return false;
