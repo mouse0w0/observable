@@ -30,8 +30,17 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
 
     @Override
     public boolean add(E e) {
-        if (super.add(e)) {
+        if (set.add(e)) {
             notifyChanged(new AddedChange(e));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (set.remove(o)) {
+            notifyChanged(new RemovedChange((E) o));
             return true;
         }
         return false;
@@ -66,11 +75,6 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
     @Override
     public int size() {
         return set.size();
-    }
-
-    @Override
-    public void clear() {
-        set.clear();
     }
 
     @Override

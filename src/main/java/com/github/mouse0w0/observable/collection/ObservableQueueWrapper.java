@@ -25,7 +25,7 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
     @Override
     public boolean add(E e) {
         if (queue.add(e)) {
-            notifyChanged(new AddedChange(Collections.singletonList(e)));
+            notifyChanged(new AddedChange(e));
             return true;
         }
         return false;
@@ -34,7 +34,7 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
     @Override
     public boolean remove(Object o) {
         if (queue.remove(o)) {
-            notifyChanged(new AddedChange(Collections.singletonList((E) o)));
+            notifyChanged(new AddedChange((E) o));
             return true;
         }
         return false;
@@ -43,7 +43,7 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
     @Override
     public boolean offer(E e) {
         if (queue.offer(e)) {
-            notifyChanged(new AddedChange(Collections.singletonList(e)));
+            notifyChanged(new AddedChange(e));
             return true;
         }
         return false;
@@ -53,7 +53,7 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
     public E poll() {
         E e = queue.poll();
         if (e != null) {
-            notifyChanged(new RemovedChange(Collections.singletonList(e)));
+            notifyChanged(new RemovedChange(e));
         }
         return e;
     }
@@ -81,11 +81,20 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        if (queue.removeAll(c)) {
-            notifyChanged(new RemovedChange(new ArrayList<>((Collection<E>) c)));
-            return true;
+        List<E> removed = new ArrayList<>();
+        for (Object o : c) {
+            if (queue.remove(o)) removed.add((E) o);
         }
-        return false;
+        if (removed.isEmpty()) return false;
+        notifyChanged(new RemovedChange(removed));
+        return true;
+    }
+
+    @Override
+    public void clear() {
+        List<E> removed = new ArrayList<>(queue);
+        queue.clear();
+        notifyChanged(new RemovedChange(removed));
     }
 
     @Override

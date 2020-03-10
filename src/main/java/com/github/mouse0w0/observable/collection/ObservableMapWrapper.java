@@ -138,10 +138,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
     public void clear() {
         for (Iterator<Entry<K, V>> i = map.entrySet().iterator(); i.hasNext(); ) {
             Entry<K, V> e = i.next();
-            K key = e.getKey();
-            V val = e.getValue();
             i.remove();
-            notifyChanged(new SimpleChange(key, val, null, false, true));
+            notifyChanged(new SimpleChange(e.getKey(), e.getValue(), null, false, true));
         }
     }
 
@@ -435,8 +433,6 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         public int hashCode() {
             return map.values().hashCode();
         }
-
-
     }
 
     private class ObservableEntry implements Entry<K, V> {
@@ -492,7 +488,6 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         public final String toString() {
             return getKey() + "=" + getValue();
         }
-
     }
 
     private class ObservableEntrySet implements Set<Entry<K, V>> {
@@ -631,6 +626,5 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         public int hashCode() {
             return map.entrySet().hashCode();
         }
-
     }
 }
