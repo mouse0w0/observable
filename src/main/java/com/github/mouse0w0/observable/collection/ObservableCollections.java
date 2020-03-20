@@ -1,9 +1,16 @@
 package com.github.mouse0w0.observable.collection;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public final class ObservableCollections {
-    private ObservableCollections() {
+
+    public static <E> ObservableList<E> observableArrayList() {
+        return observableList(new ArrayList<>());
+    }
+
+    public static <E> ObservableList<E> observableList(Supplier<List<E>> supplier) {
+        return observableList(supplier.get());
     }
 
     public static <E> ObservableList<E> observableList(List<E> list) {
@@ -14,12 +21,28 @@ public final class ObservableCollections {
         return new UnmodifiableObservableList<>(list);
     }
 
+    public static <E> ObservableSet<E> observableHashSet() {
+        return observableSet(new HashSet<>());
+    }
+
+    public static <E> ObservableSet<E> observableSet(Supplier<Set<E>> set) {
+        return observableSet(set.get());
+    }
+
     public static <E> ObservableSet<E> observableSet(Set<E> set) {
         return new ObservableSetWrapper<>(set);
     }
 
     public static <E> ObservableSet<E> unmodifiableObservableSet(ObservableSet<E> set) {
         return new UnmodifiableObservableSet<>(set);
+    }
+
+    public static <K, V> ObservableMap<K, V> observableHashMap() {
+        return observableMap(new HashMap<>());
+    }
+
+    public static <K, V> ObservableMap<K, V> observableMap(Supplier<Map<K, V>> supplier) {
+        return observableMap(supplier.get());
     }
 
     public static <K, V> ObservableMap<K, V> observableMap(Map<K, V> map) {
@@ -30,12 +53,20 @@ public final class ObservableCollections {
         return new UnmodifiableObservableMap<>(map);
     }
 
+    public static <E> ObservableQueue<E> observableQueue(Supplier<Queue<E>> supplier) {
+        return observableQueue(supplier.get());
+    }
+
     public static <E> ObservableQueue<E> observableQueue(Queue<E> queue) {
         return new ObservableQueueWrapper<>(queue);
     }
 
     public static <E> ObservableQueue<E> unmodifiableObservableQueue(ObservableQueue<E> queue) {
         return new UnmodifiableObservableQueue<>(queue);
+    }
+
+    public static <E> ObservableDeque<E> observableDeque(Supplier<Deque<E>> supplier) {
+        return observableDeque(supplier.get());
     }
 
     public static <E> ObservableDeque<E> observableDeque(Deque<E> deque) {
@@ -360,5 +391,8 @@ public final class ObservableCollections {
         public Iterator<E> descendingIterator() {
             return deque.descendingIterator();
         }
+    }
+
+    private ObservableCollections() {
     }
 }
