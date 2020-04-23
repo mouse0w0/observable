@@ -1,6 +1,7 @@
 package com.github.mouse0w0.observable.collection;
 
 import java.util.*;
+import java.util.function.UnaryOperator;
 
 public class ObservableListWrapper<E> extends AbstractList<E> implements ObservableList<E> {
 
@@ -31,73 +32,39 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     @Override
     public E set(int index, E element) {
         E removed = list.set(index, element);
-        notifyChanged(new ReplacedChange(element, removed));
+        notifyChanged(new BaseListChange.ReplacedChange<>(this, element, removed, index, index + 1));
         return removed;
     }
 
     @Override
     public void add(int index, E element) {
         list.add(index, element);
-        notifyChanged(new AddedChange(element));
+        notifyChanged(new BaseListChange.AddedChange<>(this, element, index, index + 1));
     }
 
     @Override
     public E remove(int index) {
         E element = list.remove(index);
-        notifyChanged(new RemovedChange(element));
+        notifyChanged(new BaseListChange.RemovedChange<>(this, element, index, index + 1));
         return element;
-    }
-
-    @Override
-    public boolean addAll(Collection<? extends E> c) {
-        if (list.addAll(c)) {
-            notifyChanged(new AddedChange(new ArrayList<>(c)));
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
-        if (list.addAll(index, c)) {
-            notifyChanged(new AddedChange(new ArrayList<>(c)));
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        List<E> removed = new ArrayList<>();
-        for (Object o : c) {
-            if (list.remove(o)) removed.add((E) o);
-        }
-        if (removed.isEmpty()) return false;
-        notifyChanged(new RemovedChange(removed));
-        return true;
-    }
-
-    @Override
-    public boolean add(E e) {
-        list.add(e);
-        notifyChanged(new AddedChange(e));
-        return true;
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        if (list.remove(o)) {
-            notifyChanged(new RemovedChange((E) o));
-            return true;
-        }
-        return false;
     }
 
     @Override
     public void clear() {
         List<E> removed = new ArrayList<>(list);
         list.clear();
-        notifyChanged(new RemovedChange(removed));
+        notifyChanged(new BaseListChange.RemovedChange<>(this, removed, 0, removed.size()));
+    }
+
+    @Override
+    public void sort(Comparator<? super E> c) {
+        list.sort(c);
+        notifyChanged(new BaseListChange.SortedChange<>(this, 0, size()));
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        return new SubList(super.subList(fromIndex, toIndex));
     }
 
     @Override
@@ -150,107 +117,152 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
         return list.toString();
     }
 
-    private class AddedChange extends ListChangeListener.Change<E> {
+    private class SubList implements List<E> {
 
-        private final List<E> added;
+        private final List<E> list;
 
-        public AddedChange(E added) {
-            this(Collections.singletonList(added));
-        }
-
-        public AddedChange(List<E> added) {
-            super(ObservableListWrapper.this);
-            this.added = added;
+        private SubList(List<E> list) {
+            this.list = list;
         }
 
         @Override
-        public boolean wasRemoved() {
-            return false;
+        public int size() {
+            return list.size();
         }
 
         @Override
-        public boolean wasAdded() {
-            return true;
+        public boolean isEmpty() {
+            return list.isEmpty();
         }
 
         @Override
-        public List<E> getRemoved() {
-            return Collections.emptyList();
+        public boolean contains(Object o) {
+            return list.contains(o);
         }
 
         @Override
-        public List<E> getAdded() {
-            return added;
-        }
-    }
-
-    private class RemovedChange extends ListChangeListener.Change<E> {
-
-        private final List<E> removed;
-
-        public RemovedChange(E removed) {
-            this(Collections.singletonList(removed));
-        }
-
-        public RemovedChange(List<E> removed) {
-            super(ObservableListWrapper.this);
-            this.removed = removed;
+        public Iterator<E> iterator() {
+            return list.iterator();
         }
 
         @Override
-        public boolean wasRemoved() {
-            return true;
+        public Object[] toArray() {
+            return list.toArray();
         }
 
         @Override
-        public boolean wasAdded() {
-            return false;
+        public <T> T[] toArray(T[] a) {
+            return list.toArray(a);
         }
 
         @Override
-        public List<E> getRemoved() {
-            return removed;
+        public boolean add(E e) {
+            return list.add(e);
         }
 
         @Override
-        public List<E> getAdded() {
-            return Collections.emptyList();
-        }
-    }
-
-    private class ReplacedChange extends ListChangeListener.Change<E> {
-
-        private final List<E> added;
-        private final List<E> removed;
-
-        public ReplacedChange(E added, E removed) {
-            this(Collections.singletonList(added), Collections.singletonList(removed));
-        }
-
-        public ReplacedChange(List<E> added, List<E> removed) {
-            super(ObservableListWrapper.this);
-            this.added = added;
-            this.removed = removed;
+        public boolean remove(Object o) {
+            return list.remove(o);
         }
 
         @Override
-        public boolean wasRemoved() {
-            return true;
+        public boolean containsAll(Collection<?> c) {
+            return list.containsAll(c);
         }
 
         @Override
-        public boolean wasAdded() {
-            return true;
+        public boolean addAll(Collection<? extends E> c) {
+            return list.addAll(c);
         }
 
         @Override
-        public List<E> getRemoved() {
-            return removed;
+        public boolean addAll(int index, Collection<? extends E> c) {
+            return list.addAll(index, c);
         }
 
         @Override
-        public List<E> getAdded() {
-            return added;
+        public boolean removeAll(Collection<?> c) {
+            return list.removeAll(c);
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            return list.retainAll(c);
+        }
+
+        @Override
+        public void replaceAll(UnaryOperator<E> operator) {
+            list.replaceAll(operator);
+        }
+
+        @Override
+        public void sort(Comparator<? super E> c) {
+            list.sort(c);
+        }
+
+        @Override
+        public void clear() {
+            list.clear();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return list.equals(o);
+        }
+
+        @Override
+        public int hashCode() {
+            return list.hashCode();
+        }
+
+        @Override
+        public E get(int index) {
+            return list.get(index);
+        }
+
+        @Override
+        public E set(int index, E element) {
+            return list.set(index, element);
+        }
+
+        @Override
+        public void add(int index, E element) {
+            list.add(index, element);
+        }
+
+        @Override
+        public E remove(int index) {
+            return list.remove(index);
+        }
+
+        @Override
+        public int indexOf(Object o) {
+            return list.indexOf(o);
+        }
+
+        @Override
+        public int lastIndexOf(Object o) {
+            return list.lastIndexOf(o);
+        }
+
+        @Override
+        public ListIterator<E> listIterator() {
+            return list.listIterator();
+        }
+
+        @Override
+        public ListIterator<E> listIterator(int index) {
+            return list.listIterator(index);
+        }
+
+        @Override
+        public List<E> subList(int fromIndex, int toIndex) {
+            return new SubList(list.subList(fromIndex, toIndex));
+        }
+
+        @Override
+        public Spliterator<E> spliterator() {
+            return list.spliterator();
         }
     }
 }

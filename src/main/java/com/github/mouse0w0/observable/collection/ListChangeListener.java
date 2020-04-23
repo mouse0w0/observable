@@ -19,13 +19,19 @@ public interface ListChangeListener<E> {
             return list;
         }
 
-        abstract public boolean wasRemoved();
+        public abstract int getFrom();
 
-        abstract public boolean wasAdded();
+        public abstract int getTo();
 
-        abstract public List<E> getRemoved();
+        public abstract boolean wasRemoved();
 
-        abstract public List<E> getAdded();
+        public abstract boolean wasAdded();
+
+        public abstract boolean wasSorted();
+
+        public abstract List<E> getRemoved();
+
+        public abstract List<E> getAdded();
     }
 
 }
