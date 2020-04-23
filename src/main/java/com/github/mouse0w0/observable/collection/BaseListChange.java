@@ -24,7 +24,7 @@ abstract class BaseListChange<E> extends ListChangeListener.Change<E> {
         return to;
     }
 
-    static class AddedChange<E> extends BaseListChange<E> {
+    static final class AddedChange<E> extends BaseListChange<E> {
 
         private final List<E> added;
 
@@ -63,7 +63,7 @@ abstract class BaseListChange<E> extends ListChangeListener.Change<E> {
         }
     }
 
-    static class RemovedChange<E> extends BaseListChange<E> {
+    static final class RemovedChange<E> extends BaseListChange<E> {
 
         private final List<E> removed;
 
@@ -102,7 +102,7 @@ abstract class BaseListChange<E> extends ListChangeListener.Change<E> {
         }
     }
 
-    static class ReplacedChange<E> extends BaseListChange<E> {
+    static final class ReplacedChange<E> extends BaseListChange<E> {
 
         private final List<E> added;
         private final List<E> removed;
@@ -143,7 +143,7 @@ abstract class BaseListChange<E> extends ListChangeListener.Change<E> {
         }
     }
 
-    static class SortedChange<E> extends BaseListChange<E> {
+    static final class SortedChange<E> extends BaseListChange<E> {
 
         public SortedChange(ObservableList<E> list, int from, int to) {
             super(list, from, to);
