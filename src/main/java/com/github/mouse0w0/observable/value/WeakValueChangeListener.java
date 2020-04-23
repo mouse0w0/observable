@@ -4,11 +4,14 @@ import com.github.mouse0w0.observable.WeakListener;
 
 import java.lang.ref.WeakReference;
 
-public class WeakValueChangeListener<T> implements ValueChangeListener<T>, WeakListener {
+public final class WeakValueChangeListener<T> implements ValueChangeListener<T>, WeakListener {
 
     private final WeakReference<ValueChangeListener<T>> ref;
 
     public WeakValueChangeListener(ValueChangeListener<T> listener) {
+        if (listener == null) {
+            throw new NullPointerException("listener");
+        }
         this.ref = new WeakReference<>(listener);
     }
 
