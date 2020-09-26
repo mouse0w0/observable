@@ -1,6 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
-import com.github.mouse0w0.observable.binding.Bindings;
+import com.github.mouse0w0.observable.binding.BidirectionalBinding;
+import com.github.mouse0w0.observable.binding.UnidirectionalBinding;
 
 public interface MutableValue<T> extends ObservableValue<T> {
 
@@ -8,11 +9,19 @@ public interface MutableValue<T> extends ObservableValue<T> {
 
     ObservableValue<T> toUnmodifiable();
 
+    default void bind(ObservableValue<T> other) {
+        UnidirectionalBinding.bind(this, other);
+    }
+
+    default void unbind(ObservableValue<T> other) {
+        UnidirectionalBinding.unbind(this, other);
+    }
+
     default void bindBidirectional(MutableValue<T> other) {
-        Bindings.bindBidirectional(this, other);
+        BidirectionalBinding.bind(this, other);
     }
 
     default void unbindBidirectional(MutableValue<T> other) {
-        Bindings.unbindBidirectional(this, other);
+        BidirectionalBinding.unbind(this, other);
     }
 }
