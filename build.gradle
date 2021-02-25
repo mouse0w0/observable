@@ -1,16 +1,6 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.novoda:bintray-release:0.9.2'
-    }
-}
-
-apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'java-library'
 apply plugin: 'maven-publish'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'signing'
 
 group 'com.github.mouse0w0'
 version '1.4.0'
@@ -31,20 +21,67 @@ publishing {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
 }
 
-publish {
-    userOrg = 'mouse0w0'
-    groupId = project.group
-    artifactId = 'observable'
-    publishVersion = project.version
-    desc = 'Observable classes implementation for java'
-    website = 'https://github.com/mouse0w0/observable'
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            pom {
+                name = "Observable"
+                description = "Observable classes implementation for Java."
+                url = "https://github.com/mouse0w0/observable"
+                licenses {
+                    license {
+                        name = "Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0"
+                    }
+                }
+                developers {
+                    developer {
+                        name = "Mouse"
+                        email = "mouse0w0@qq.com"
+                    }
+                }
+                scm {
+                    url = "https://github.com/mouse0w0/observable.git"
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = project.findProperty("ossUsername") ?: System.getenv("USERNAME")
+                password = project.findProperty("ossPassword") ?: System.getenv("PASSWORD")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/mouse0w0/observable")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.maven
 }
