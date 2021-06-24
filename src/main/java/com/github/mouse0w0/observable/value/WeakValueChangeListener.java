@@ -26,7 +26,7 @@ public final class WeakValueChangeListener<T> implements ValueChangeListener<T>,
         if (listener != null) {
             listener.onChanged(observable, oldValue, newValue);
         } else {
-            observable.removeChangeListener(this);
+            observable.removeListener(this);
         }
     }
 }

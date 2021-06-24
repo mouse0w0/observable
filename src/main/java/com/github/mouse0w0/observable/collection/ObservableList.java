@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface ObservableList<E> extends List<E> {
 
-    void addChangeListener(ListChangeListener<? super E> listener);
+    void addListener(ListChangeListener<? super E> listener);
 
-    void removeChangeListener(ListChangeListener<? super E> listener);
+    void removeListener(ListChangeListener<? super E> listener);
 
     default boolean addAll(E... elements) {
         return Collections.addAll(this, elements);

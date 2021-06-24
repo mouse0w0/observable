@@ -11,7 +11,7 @@ public abstract class UnidirectionalBinding<T> extends AbstractBinding<T> {
         checkParameters(source, target);
         UnidirectionalBinding<T> binding = new ObjectBinding<>(source, target);
         source.setValue(target.getValue());
-        target.addChangeListener(binding);
+        target.addListener(binding);
         return binding;
     }
 
@@ -19,7 +19,7 @@ public abstract class UnidirectionalBinding<T> extends AbstractBinding<T> {
     public static <T> void unbind(MutableValue<T> source, ObservableValue<T> target) {
         checkParameters(source, target);
         AbstractBinding forRemoval = createForRemovalBinding(source, target);
-        target.removeChangeListener(forRemoval);
+        target.removeListener(forRemoval);
     }
 
     private static void checkParameters(Object source, Object target) {
@@ -64,7 +64,7 @@ public abstract class UnidirectionalBinding<T> extends AbstractBinding<T> {
                 ObservableValue<T> target = this.target.get();
                 if (source == null) {
                     if (target != null) {
-                        target.removeChangeListener(this);
+                        target.removeListener(this);
                     }
                 } else {
                     try {

@@ -86,13 +86,13 @@ public final class ObservableCollections {
         }
 
         @Override
-        public void addChangeListener(ListChangeListener<? super E> listener) {
-            list.addChangeListener(listener);
+        public void addListener(ListChangeListener<? super E> listener) {
+            list.addListener(listener);
         }
 
         @Override
-        public void removeChangeListener(ListChangeListener<? super E> listener) {
-            list.removeChangeListener(listener);
+        public void removeListener(ListChangeListener<? super E> listener) {
+            list.removeListener(listener);
         }
 
         @Override
@@ -115,13 +115,13 @@ public final class ObservableCollections {
         }
 
         @Override
-        public void addChangeListener(SetChangeListener<? super E> listener) {
-            set.addChangeListener(listener);
+        public void addListener(SetChangeListener<? super E> listener) {
+            set.addListener(listener);
         }
 
         @Override
-        public void removeChangeListener(SetChangeListener<? super E> listener) {
-            set.removeChangeListener(listener);
+        public void removeListener(SetChangeListener<? super E> listener) {
+            set.removeListener(listener);
         }
 
         @Override
@@ -244,13 +244,13 @@ public final class ObservableCollections {
         }
 
         @Override
-        public void addChangeListener(MapChangeListener<? super K, ? super V> listener) {
-            map.addChangeListener(listener);
+        public void addListener(MapChangeListener<? super K, ? super V> listener) {
+            map.addListener(listener);
         }
 
         @Override
-        public void removeChangeListener(MapChangeListener<? super K, ? super V> listener) {
-            map.removeChangeListener(listener);
+        public void removeListener(MapChangeListener<? super K, ? super V> listener) {
+            map.removeListener(listener);
         }
     }
 
@@ -263,13 +263,13 @@ public final class ObservableCollections {
         }
 
         @Override
-        public void addChangeListener(QueueChangeListener<? super E> listener) {
-            queue.addChangeListener(listener);
+        public void addListener(QueueChangeListener<? super E> listener) {
+            queue.addListener(listener);
         }
 
         @Override
-        public void removeChangeListener(QueueChangeListener<? super E> listener) {
-            queue.removeChangeListener(listener);
+        public void removeListener(QueueChangeListener<? super E> listener) {
+            queue.removeListener(listener);
         }
 
         @Override

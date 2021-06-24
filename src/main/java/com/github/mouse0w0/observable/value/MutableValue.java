@@ -7,8 +7,6 @@ public interface MutableValue<T> extends ObservableValue<T> {
 
     void setValue(T value);
 
-    ObservableValue<T> toUnmodifiable();
-
     default void bind(ObservableValue<T> other) {
         UnidirectionalBinding.bind(this, other);
     }

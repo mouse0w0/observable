@@ -13,9 +13,9 @@ public interface ObservableValue<T> {
 
     T getValue();
 
-    void addChangeListener(ValueChangeListener<? super T> listener);
+    void addListener(ValueChangeListener<? super T> listener);
 
-    void removeChangeListener(ValueChangeListener<? super T> listener);
+    void removeListener(ValueChangeListener<? super T> listener);
 
     default Optional<T> optional() {
         return Optional.ofNullable(getValue());

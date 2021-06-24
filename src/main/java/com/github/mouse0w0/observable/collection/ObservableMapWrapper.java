@@ -66,13 +66,13 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
     }
 
     @Override
-    public void addChangeListener(MapChangeListener<? super K, ? super V> listener) {
+    public void addListener(MapChangeListener<? super K, ? super V> listener) {
         Objects.requireNonNull(listener);
         listeners.add(listener);
     }
 
     @Override
-    public void removeChangeListener(MapChangeListener<? super K, ? super V> listener) {
+    public void removeListener(MapChangeListener<? super K, ? super V> listener) {
         listeners.remove(listener);
     }
 

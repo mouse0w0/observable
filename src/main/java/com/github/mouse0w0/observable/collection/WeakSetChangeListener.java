@@ -26,7 +26,7 @@ public final class WeakSetChangeListener<E> implements SetChangeListener<E>, Wea
         if (listener != null) {
             listener.onChanged(change);
         } else {
-            change.getSet().removeChangeListener(this);
+            change.getSet().removeListener(this);
         }
     }
 }

@@ -2,15 +2,15 @@ package com.github.mouse0w0.observable.value;
 
 import java.util.Objects;
 
-public class NonNullMutableStringValue extends SimpleMutableStringValue {
+public class NonNullStringValue extends SimpleStringValue {
 
     private final String defaultValue;
 
-    public NonNullMutableStringValue() {
+    public NonNullStringValue() {
         this("");
     }
 
-    public NonNullMutableStringValue(String defaultValue) {
+    public NonNullStringValue(String defaultValue) {
         this.defaultValue = Objects.requireNonNull(defaultValue, "Default value cannot be null");
         set(defaultValue);
     }

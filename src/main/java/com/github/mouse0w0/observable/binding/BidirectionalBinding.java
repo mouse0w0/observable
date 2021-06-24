@@ -11,8 +11,8 @@ public abstract class BidirectionalBinding<T> extends AbstractBinding<T> {
         checkParameters(source, target);
         BidirectionalBinding<T> binding = new ObjectBinding<>(source, target);
         source.setValue(target.getValue());
-        source.addChangeListener(binding);
-        target.addChangeListener(binding);
+        source.addListener(binding);
+        target.addListener(binding);
         return binding;
     }
 
@@ -20,8 +20,8 @@ public abstract class BidirectionalBinding<T> extends AbstractBinding<T> {
     public static <T> void unbind(MutableValue<T> source, MutableValue<T> target) {
         checkParameters(source, target);
         AbstractBinding forRemoval = createForRemovalBinding(source, target);
-        source.removeChangeListener(forRemoval);
-        target.removeChangeListener(forRemoval);
+        source.removeListener(forRemoval);
+        target.removeListener(forRemoval);
     }
 
     private static void checkParameters(Object source, Object target) {
@@ -66,10 +66,10 @@ public abstract class BidirectionalBinding<T> extends AbstractBinding<T> {
                 MutableValue<T> target = this.target.get();
                 if (source == null || target == null) {
                     if (source != null) {
-                        source.removeChangeListener(this);
+                        source.removeListener(this);
                     }
                     if (target != null) {
-                        target.removeChangeListener(this);
+                        target.removeListener(this);
                     }
                 } else {
                     try {

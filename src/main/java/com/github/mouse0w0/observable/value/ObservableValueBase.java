@@ -9,14 +9,14 @@ public abstract class ObservableValueBase<T> implements ObservableValue<T> {
     private List<ValueChangeListener<? super T>> changeListeners;
 
     @Override
-    public void addChangeListener(ValueChangeListener<? super T> listener) {
+    public void addListener(ValueChangeListener<? super T> listener) {
         if (changeListeners == null) changeListeners = new LinkedList<>();
         Objects.requireNonNull(listener);
         changeListeners.add(listener);
     }
 
     @Override
-    public void removeChangeListener(ValueChangeListener<? super T> listener) {
+    public void removeListener(ValueChangeListener<? super T> listener) {
         if (changeListeners == null) return;
         Objects.requireNonNull(listener);
         changeListeners.remove(listener);

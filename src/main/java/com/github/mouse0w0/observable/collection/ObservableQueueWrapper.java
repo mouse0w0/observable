@@ -98,12 +98,12 @@ public class ObservableQueueWrapper<E> extends AbstractQueue<E> implements Obser
     }
 
     @Override
-    public void addChangeListener(QueueChangeListener<? super E> listener) {
+    public void addListener(QueueChangeListener<? super E> listener) {
         listeners.add(listener);
     }
 
     @Override
-    public void removeChangeListener(QueueChangeListener<? super E> listener) {
+    public void removeListener(QueueChangeListener<? super E> listener) {
         listeners.remove(listener);
     }
 

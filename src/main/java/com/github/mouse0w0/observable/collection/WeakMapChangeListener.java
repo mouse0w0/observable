@@ -26,7 +26,7 @@ public final class WeakMapChangeListener<K, V> implements MapChangeListener<K, V
         if (listener != null) {
             listener.onChanged(change);
         } else {
-            change.getMap().removeChangeListener(this);
+            change.getMap().removeListener(this);
         }
     }
 }

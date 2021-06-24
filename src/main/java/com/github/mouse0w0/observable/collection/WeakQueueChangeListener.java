@@ -26,7 +26,7 @@ public final class WeakQueueChangeListener<E> implements QueueChangeListener<E>,
         if (listener != null) {
             listener.onChanged(change);
         } else {
-            change.getQueue().removeChangeListener(this);
+            change.getQueue().removeListener(this);
         }
     }
 }

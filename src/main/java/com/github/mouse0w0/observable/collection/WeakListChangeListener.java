@@ -26,7 +26,7 @@ public final class WeakListChangeListener<E> implements ListChangeListener<E>, W
         if (listener != null) {
             listener.onChanged(change);
         } else {
-            change.getList().removeChangeListener(this);
+            change.getList().removeListener(this);
         }
     }
 }

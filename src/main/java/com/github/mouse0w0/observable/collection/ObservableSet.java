@@ -5,9 +5,9 @@ import java.util.Set;
 
 public interface ObservableSet<E> extends Set<E> {
 
-    void addChangeListener(SetChangeListener<? super E> listener);
+    void addListener(SetChangeListener<? super E> listener);
 
-    void removeChangeListener(SetChangeListener<? super E> listener);
+    void removeListener(SetChangeListener<? super E> listener);
 
     default boolean addAll(E... elements) {
         return Collections.addAll(this, elements);

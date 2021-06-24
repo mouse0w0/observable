@@ -14,12 +14,12 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     }
 
     @Override
-    public void addChangeListener(ListChangeListener<? super E> listener) {
+    public void addListener(ListChangeListener<? super E> listener) {
         listeners.add(listener);
     }
 
     @Override
-    public void removeChangeListener(ListChangeListener<? super E> listener) {
+    public void removeListener(ListChangeListener<? super E> listener) {
         listeners.remove(listener);
     }
 

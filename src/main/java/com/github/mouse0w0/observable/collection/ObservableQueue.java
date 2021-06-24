@@ -5,9 +5,9 @@ import java.util.Queue;
 
 public interface ObservableQueue<E> extends Queue<E> {
 
-    void addChangeListener(QueueChangeListener<? super E> listener);
+    void addListener(QueueChangeListener<? super E> listener);
 
-    void removeChangeListener(QueueChangeListener<? super E> listener);
+    void removeListener(QueueChangeListener<? super E> listener);
 
     default boolean addAll(E... elements) {
         return Collections.addAll(this, elements);
