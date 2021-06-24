@@ -1,8 +1,11 @@
 package com.github.mouse0w0.observable.value;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -27,14 +30,14 @@ public interface ObservableValue<T> {
     }
 
     default void ifPresent(Consumer<? super T> action) {
-        T value = getValue();
+        final T value = getValue();
         if (value != null) {
             action.accept(value);
         }
     }
 
     default void ifPresentOrElse(Consumer<? super T> action, Runnable emptyAction) {
-        T value = getValue();
+        final T value = getValue();
         if (value != null) {
             action.accept(value);
         } else {
@@ -42,26 +45,47 @@ public interface ObservableValue<T> {
         }
     }
 
-    default Stream<T> stream() {
-        if (!isPresent()) {
-            return Stream.empty();
-        } else {
-            return Stream.of(getValue());
+    default Optional<T> filter(Predicate<? super T> predicate) {
+        Objects.requireNonNull(predicate);
+        final T value = getValue();
+        if (value == null)
+            return Optional.empty();
+        else
+            return predicate.test(value) ? Optional.of(value) : Optional.empty();
+    }
+
+    default <U> Optional<U> map(Function<? super T, ? extends U> mapper) {
+        Objects.requireNonNull(mapper);
+        final T value = getValue();
+        if (value == null)
+            return Optional.empty();
+        else {
+            return Optional.ofNullable(mapper.apply(value));
+        }
+    }
+
+    default <U> Optional<U> flatMap(Function<? super T, Optional<U>> mapper) {
+        Objects.requireNonNull(mapper);
+        final T value = getValue();
+        if (value == null)
+            return Optional.empty();
+        else {
+            return Objects.requireNonNull(mapper.apply(value));
         }
     }
 
     default T orElse(T other) {
-        T value = getValue();
+        final T value = getValue();
         return value != null ? value : other;
     }
 
     default T orElseGet(Supplier<? extends T> supplier) {
-        T value = getValue();
+        final T value = getValue();
         return value != null ? value : supplier.get();
     }
 
     default T orElseThrow() {
-        T value = getValue();
+        final T value = getValue();
         if (value == null) {
             throw new NoSuchElementException("No value present");
         }
@@ -69,11 +93,20 @@ public interface ObservableValue<T> {
     }
 
     default <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
-        T value = getValue();
+        final T value = getValue();
         if (value != null) {
             return value;
         } else {
             throw exceptionSupplier.get();
+        }
+    }
+
+    default Stream<T> stream() {
+        final T value = getValue();
+        if (value == null) {
+            return Stream.empty();
+        } else {
+            return Stream.of(value);
         }
     }
 }
