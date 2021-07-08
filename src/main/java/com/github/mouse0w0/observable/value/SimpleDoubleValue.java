@@ -14,7 +14,7 @@ public class SimpleDoubleValue extends ObservableValueBase<Double> implements Mu
 
     @Override
     public void set(double value) {
-        if (this.value == value) {
+        if (Double.doubleToLongBits(this.value) == Double.doubleToLongBits(value)) {
             return;
         }
         double oldValue = this.value;
