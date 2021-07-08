@@ -67,12 +67,12 @@ public class ReadOnlyDoubleWrapper extends SimpleDoubleValue implements ReadOnly
         }
 
         @Override
-        public void addListener(ValueChangeListener<? super Double> listener) {
+        public void addListener(ChangeListener<? super Double> listener) {
             ReadOnlyDoubleWrapper.this.addListener(listener);
         }
 
         @Override
-        public void removeListener(ValueChangeListener<? super Double> listener) {
+        public void removeListener(ChangeListener<? super Double> listener) {
             ReadOnlyDoubleWrapper.this.removeListener(listener);
         }
 

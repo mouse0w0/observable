@@ -33,12 +33,12 @@ public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements Re
         }
 
         @Override
-        public void addListener(ValueChangeListener<? super T> listener) {
+        public void addListener(ChangeListener<? super T> listener) {
             ReadOnlyObjectWrapper.this.addListener(listener);
         }
 
         @Override
-        public void removeListener(ValueChangeListener<? super T> listener) {
+        public void removeListener(ChangeListener<? super T> listener) {
             ReadOnlyObjectWrapper.this.removeListener(listener);
         }
 

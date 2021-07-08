@@ -67,12 +67,12 @@ public class ReadOnlyIntWrapper extends SimpleIntValue implements ReadOnlyWrappe
         }
 
         @Override
-        public void addListener(ValueChangeListener<? super Integer> listener) {
+        public void addListener(ChangeListener<? super Integer> listener) {
             ReadOnlyIntWrapper.this.addListener(listener);
         }
 
         @Override
-        public void removeListener(ValueChangeListener<? super Integer> listener) {
+        public void removeListener(ChangeListener<? super Integer> listener) {
             ReadOnlyIntWrapper.this.removeListener(listener);
         }
 

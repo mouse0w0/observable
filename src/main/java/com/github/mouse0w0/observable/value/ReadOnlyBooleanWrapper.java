@@ -37,12 +37,12 @@ public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements ReadOn
         }
 
         @Override
-        public void addListener(ValueChangeListener<? super Boolean> listener) {
+        public void addListener(ChangeListener<? super Boolean> listener) {
             ReadOnlyBooleanWrapper.this.addListener(listener);
         }
 
         @Override
-        public void removeListener(ValueChangeListener<? super Boolean> listener) {
+        public void removeListener(ChangeListener<? super Boolean> listener) {
             ReadOnlyBooleanWrapper.this.removeListener(listener);
         }
 

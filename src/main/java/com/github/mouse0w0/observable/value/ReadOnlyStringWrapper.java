@@ -33,12 +33,12 @@ public class ReadOnlyStringWrapper extends SimpleStringValue implements ReadOnly
         }
 
         @Override
-        public void addListener(ValueChangeListener<? super String> listener) {
+        public void addListener(ChangeListener<? super String> listener) {
             ReadOnlyStringWrapper.this.addListener(listener);
         }
 
         @Override
-        public void removeListener(ValueChangeListener<? super String> listener) {
+        public void removeListener(ChangeListener<? super String> listener) {
             ReadOnlyStringWrapper.this.removeListener(listener);
         }
 

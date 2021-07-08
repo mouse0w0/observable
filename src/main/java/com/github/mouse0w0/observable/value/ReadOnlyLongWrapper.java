@@ -67,12 +67,12 @@ public class ReadOnlyLongWrapper extends SimpleLongValue implements ReadOnlyWrap
         }
 
         @Override
-        public void addListener(ValueChangeListener<? super Long> listener) {
+        public void addListener(ChangeListener<? super Long> listener) {
             ReadOnlyLongWrapper.this.addListener(listener);
         }
 
         @Override
-        public void removeListener(ValueChangeListener<? super Long> listener) {
+        public void removeListener(ChangeListener<? super Long> listener) {
             ReadOnlyLongWrapper.this.removeListener(listener);
         }
 

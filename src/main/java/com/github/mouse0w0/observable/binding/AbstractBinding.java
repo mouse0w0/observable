@@ -1,10 +1,10 @@
 package com.github.mouse0w0.observable.binding;
 
 import com.github.mouse0w0.observable.WeakListener;
+import com.github.mouse0w0.observable.value.ChangeListener;
 import com.github.mouse0w0.observable.value.ObservableValue;
-import com.github.mouse0w0.observable.value.ValueChangeListener;
 
-abstract class AbstractBinding<T> implements WeakListener, ValueChangeListener<T> {
+abstract class AbstractBinding<T> implements WeakListener, ChangeListener<T> {
 
     public static AbstractBinding<?> createForRemovalBinding(Object source, Object target) {
         return new ForRemovalBinding(source, target);

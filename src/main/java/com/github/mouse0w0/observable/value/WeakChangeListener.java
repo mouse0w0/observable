@@ -4,11 +4,11 @@ import com.github.mouse0w0.observable.WeakListener;
 
 import java.lang.ref.WeakReference;
 
-public final class WeakValueChangeListener<T> implements ValueChangeListener<T>, WeakListener {
+public final class WeakChangeListener<T> implements ChangeListener<T>, WeakListener {
 
-    private final WeakReference<ValueChangeListener<T>> ref;
+    private final WeakReference<ChangeListener<T>> ref;
 
-    public WeakValueChangeListener(ValueChangeListener<T> listener) {
+    public WeakChangeListener(ChangeListener<T> listener) {
         if (listener == null) {
             throw new NullPointerException("listener");
         }
@@ -22,7 +22,7 @@ public final class WeakValueChangeListener<T> implements ValueChangeListener<T>,
 
     @Override
     public void onChanged(ObservableValue<? extends T> observable, T oldValue, T newValue) {
-        ValueChangeListener<T> listener = ref.get();
+        ChangeListener<T> listener = ref.get();
         if (listener != null) {
             listener.onChanged(observable, oldValue, newValue);
         } else {

@@ -67,12 +67,12 @@ public class ReadOnlyFloatWrapper extends SimpleFloatValue implements ReadOnlyWr
         }
 
         @Override
-        public void addListener(ValueChangeListener<? super Float> listener) {
+        public void addListener(ChangeListener<? super Float> listener) {
             ReadOnlyFloatWrapper.this.addListener(listener);
         }
 
         @Override
-        public void removeListener(ValueChangeListener<? super Float> listener) {
+        public void removeListener(ChangeListener<? super Float> listener) {
             ReadOnlyFloatWrapper.this.removeListener(listener);
         }
 
