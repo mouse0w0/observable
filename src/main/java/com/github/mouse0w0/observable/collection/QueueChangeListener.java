@@ -19,12 +19,12 @@ public interface QueueChangeListener<E> {
             return queue;
         }
 
-        abstract public boolean wasRemoved();
+        public abstract boolean wasRemoved();
 
-        abstract public boolean wasAdded();
+        public abstract boolean wasAdded();
 
-        abstract public List<E> getRemoved();
+        public abstract List<E> getRemoved();
 
-        abstract public List<E> getAdded();
+        public abstract List<E> getAdded();
     }
 }
