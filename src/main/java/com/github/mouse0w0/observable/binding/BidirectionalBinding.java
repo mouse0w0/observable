@@ -1,11 +1,13 @@
 package com.github.mouse0w0.observable.binding;
 
+import com.github.mouse0w0.observable.WeakListener;
+import com.github.mouse0w0.observable.value.ChangeListener;
 import com.github.mouse0w0.observable.value.MutableValue;
 import com.github.mouse0w0.observable.value.ObservableValue;
 
 import java.lang.ref.WeakReference;
 
-public abstract class BidirectionalBinding<T> extends AbstractBinding<T> {
+public abstract class BidirectionalBinding<T> implements ChangeListener<T>, WeakListener {
 
     public static <T> BidirectionalBinding<T> bind(MutableValue<T> source, MutableValue<T> target) {
         checkParameters(source, target);
@@ -19,7 +21,7 @@ public abstract class BidirectionalBinding<T> extends AbstractBinding<T> {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static <T> void unbind(MutableValue<T> source, MutableValue<T> target) {
         checkParameters(source, target);
-        AbstractBinding forRemoval = createForRemovalBinding(source, target);
+        ForRemovalBinding forRemoval = new ForRemovalBinding(source, target);
         source.removeListener(forRemoval);
         target.removeListener(forRemoval);
     }
@@ -33,8 +35,43 @@ public abstract class BidirectionalBinding<T> extends AbstractBinding<T> {
         }
     }
 
-    private BidirectionalBinding(Object source, Object target) {
-        super(source, target);
+    protected final int hash;
+
+    public BidirectionalBinding(Object source, Object target) {
+        hash = source.hashCode() * 31 + target.hashCode();
+    }
+
+    protected abstract Object getSource();
+
+    protected abstract Object getTarget();
+
+    @Override
+    public boolean wasGarbageCollected() {
+        return getSource() == null || getTarget() == null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        Object source = getSource();
+        Object target = getTarget();
+        if (source == null || target == null) return false;
+
+        if (o == null || getClass() != o.getClass()) return false;
+        BidirectionalBinding<?> other = (BidirectionalBinding<?>) o;
+
+        Object otherSource = other.getSource();
+        Object otherTarget = other.getTarget();
+        if (otherSource == null || otherTarget == null) return false;
+
+        return (source == otherSource && target == otherTarget) ||
+                (source == otherTarget && target == otherSource);
+    }
+
+    @Override
+    public int hashCode() {
+        return hash;
     }
 
     private static class ObjectBinding<T> extends BidirectionalBinding<T> {
@@ -84,6 +121,33 @@ public abstract class BidirectionalBinding<T> extends AbstractBinding<T> {
                     }
                 }
             }
+        }
+    }
+
+    private static class ForRemovalBinding extends BidirectionalBinding<Object> {
+
+        private final Object source;
+        private final Object target;
+
+        private ForRemovalBinding(Object source, Object target) {
+            super(source, target);
+            this.source = source;
+            this.target = target;
+        }
+
+        @Override
+        protected Object getSource() {
+            return source;
+        }
+
+        @Override
+        protected Object getTarget() {
+            return target;
+        }
+
+        @Override
+        public void onChanged(ObservableValue<?> observable, Object oldValue, Object newValue) {
+            throw new UnsupportedOperationException("Should not reach here");
         }
     }
 }
