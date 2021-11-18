@@ -3,7 +3,7 @@ package com.github.mouse0w0.observable.collection;
 @FunctionalInterface
 public interface MapChangeListener<K, V> {
 
-    void onChanged(Change<K, V> change);
+    void onChanged(Change<? extends K, ? extends V> change);
 
     abstract class Change<K, V> {
 

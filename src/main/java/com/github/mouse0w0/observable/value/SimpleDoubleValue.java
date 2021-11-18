@@ -19,7 +19,7 @@ public class SimpleDoubleValue extends ObservableValueBase<Double> implements Mu
         }
         double oldValue = this.value;
         this.value = value;
-        fireValueChangedEvent(oldValue, value);
+        notifyChanged(oldValue, value);
     }
 
     @Override

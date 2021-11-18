@@ -19,7 +19,7 @@ public class SimpleLongValue extends ObservableValueBase<Long> implements Mutabl
         }
         long oldValue = this.value;
         this.value = value;
-        fireValueChangedEvent(oldValue, value);
+        notifyChanged(oldValue, value);
     }
 
     @Override

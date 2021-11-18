@@ -5,9 +5,9 @@ import java.util.function.UnaryOperator;
 
 public class ObservableListWrapper<E> extends AbstractList<E> implements ObservableList<E> {
 
-    private final List<ListChangeListener<? super E>> listeners = new LinkedList<>();
-
     private final List<E> list;
+
+    private ListListenerHelper<E> listenerHelper;
 
     public ObservableListWrapper(List<E> list) {
         this.list = list;
@@ -15,18 +15,16 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
 
     @Override
     public void addListener(ListChangeListener<? super E> listener) {
-        listeners.add(listener);
+        listenerHelper = ListListenerHelper.addListener(listenerHelper, listener);
     }
 
     @Override
     public void removeListener(ListChangeListener<? super E> listener) {
-        listeners.remove(listener);
+        listenerHelper = ListListenerHelper.removeListener(listenerHelper, listener);
     }
 
-    protected void notifyChanged(ListChangeListener.Change<? super E> change) {
-        for (ListChangeListener listener : listeners) {
-            listener.onChanged(change);
-        }
+    protected void notifyChanged(ListChangeListener.Change<? extends E> change) {
+        ListListenerHelper.fire(listenerHelper, change);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class SimpleStringValue extends ObservableValueBase<String> implements Mu
         }
         String oldValue = this.value;
         this.value = value;
-        fireValueChangedEvent(oldValue, value);
+        notifyChanged(oldValue, value);
     }
 
     @Override

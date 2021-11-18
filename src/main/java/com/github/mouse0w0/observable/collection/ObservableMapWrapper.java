@@ -4,6 +4,8 @@ import java.util.*;
 
 public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements ObservableMap<K, V> {
 
+    private MapListenerHelper<K, V> listenerHelper;
+
     private ObservableEntrySet entrySet;
     private ObservableKeySet keySet;
     private ObservableValues values;
@@ -59,21 +61,18 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         }
     }
 
-    protected void notifyChanged(MapChangeListener.Change<? super K, ? super V> change) {
-        for (MapChangeListener listener : listeners) {
-            listener.onChanged(change);
-        }
+    protected void notifyChanged(MapChangeListener.Change<? extends K, ? extends V> change) {
+        MapListenerHelper.fire(listenerHelper, change);
     }
 
     @Override
     public void addListener(MapChangeListener<? super K, ? super V> listener) {
-        Objects.requireNonNull(listener);
-        listeners.add(listener);
+        listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
     }
 
     @Override
     public void removeListener(MapChangeListener<? super K, ? super V> listener) {
-        listeners.remove(listener);
+        listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
     }
 
     @Override

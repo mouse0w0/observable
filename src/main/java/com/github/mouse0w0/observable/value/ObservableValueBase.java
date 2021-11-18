@@ -2,19 +2,19 @@ package com.github.mouse0w0.observable.value;
 
 public abstract class ObservableValueBase<T> implements ObservableValue<T> {
 
-    private ListenerHelper<T> helper;
+    private ListenerHelper<T> listenerHelper;
 
     @Override
     public void addListener(ChangeListener<? super T> listener) {
-        helper = ListenerHelper.addListener(helper, listener);
+        listenerHelper = ListenerHelper.addListener(listenerHelper, listener);
     }
 
     @Override
     public void removeListener(ChangeListener<? super T> listener) {
-        helper = ListenerHelper.removeListener(helper, listener);
+        listenerHelper = ListenerHelper.removeListener(listenerHelper, listener);
     }
 
-    protected void fireValueChangedEvent(T oldValue, T newValue) {
-        ListenerHelper.fireValueChangeEvent(helper, this, oldValue, newValue);
+    protected void notifyChanged(T oldValue, T newValue) {
+        ListenerHelper.fire(listenerHelper, this, oldValue, newValue);
     }
 }

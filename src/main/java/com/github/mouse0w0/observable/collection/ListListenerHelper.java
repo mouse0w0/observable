@@ -1,70 +1,65 @@
-package com.github.mouse0w0.observable.value;
+package com.github.mouse0w0.observable.collection;
 
 import java.util.Arrays;
 
-abstract class ListenerHelper<T> {
-    public static <T> ListenerHelper<T> addListener(ListenerHelper<T> helper, ChangeListener<? super T> listener) {
+abstract class ListListenerHelper<E> {
+    public static <E> ListListenerHelper<E> addListener(ListListenerHelper<E> helper, ListChangeListener<? super E> listener) {
         if (listener == null) throw new NullPointerException("listener");
         return helper == null ? new SingleListener<>(listener) : helper.addListener(listener);
     }
 
-    public static <T> ListenerHelper<T> removeListener(ListenerHelper<T> helper, ChangeListener<? super T> listener) {
+    public static <E> ListListenerHelper<E> removeListener(ListListenerHelper<E> helper, ListChangeListener<? super E> listener) {
         if (listener == null) throw new NullPointerException("listener");
         return helper == null ? new SingleListener<>(listener) : helper.removeListener(listener);
     }
 
-    public static <T> void fire(ListenerHelper<T> helper, ObservableValue<T> observable, T oldValue, T newValue) {
+    public static <E> void fire(ListListenerHelper<E> helper, ListChangeListener.Change<? extends E> change) {
         if (helper != null) {
-            helper.fire(observable, oldValue, newValue);
+            helper.fire(change);
         }
     }
 
-    protected abstract ListenerHelper<T> addListener(ChangeListener<? super T> listener);
+    protected abstract ListListenerHelper<E> addListener(ListChangeListener<? super E> listener);
 
-    protected abstract ListenerHelper<T> removeListener(ChangeListener<? super T> listener);
+    protected abstract ListListenerHelper<E> removeListener(ListChangeListener<? super E> listener);
 
-    protected abstract void fire(ObservableValue<T> observable, T oldValue, T newValue);
+    protected abstract void fire(ListChangeListener.Change<? extends E> change);
 
-    private static final class SingleListener<T> extends ListenerHelper<T> {
+    private static final class SingleListener<E> extends ListListenerHelper<E> {
 
-        private final ChangeListener<? super T> listener;
+        private final ListChangeListener<? super E> listener;
 
-        public SingleListener(ChangeListener<? super T> listener) {
+        public SingleListener(ListChangeListener<? super E> listener) {
             this.listener = listener;
         }
 
         @Override
-        protected ListenerHelper<T> addListener(ChangeListener<? super T> listener) {
+        protected ListListenerHelper<E> addListener(ListChangeListener<? super E> listener) {
             return new ArrayListener<>(this.listener, listener);
         }
 
         @Override
-        protected ListenerHelper<T> removeListener(ChangeListener<? super T> listener) {
+        protected ListListenerHelper<E> removeListener(ListChangeListener<? super E> listener) {
             return this.listener.equals(listener) ? null : this;
         }
 
         @Override
-        protected void fire(ObservableValue<T> observable, T oldValue, T newValue) {
-            try {
-                listener.onChanged(observable, oldValue, newValue);
-            } catch (RuntimeException e) {
-                final Thread currentThread = Thread.currentThread();
-                currentThread.getUncaughtExceptionHandler().uncaughtException(currentThread, e);
-            }
+        protected void fire(ListChangeListener.Change<? extends E> change) {
+            listener.onChanged(change);
         }
     }
 
-    private static final class ArrayListener<T> extends ListenerHelper<T> {
-        private ChangeListener<? super T>[] listeners;
+    private static final class ArrayListener<E> extends ListListenerHelper<E> {
+        private ListChangeListener<? super E>[] listeners;
         private int size;
         private boolean locked;
 
-        public ArrayListener(ChangeListener<? super T> listener0, ChangeListener<? super T> listener1) {
-            listeners = new ChangeListener[]{listener0, listener1};
+        public ArrayListener(ListChangeListener<? super E> listener0, ListChangeListener<? super E> listener1) {
+            listeners = new ListChangeListener[]{listener0, listener1};
         }
 
         @Override
-        protected ListenerHelper<T> addListener(ChangeListener<? super T> listener) {
+        protected ListListenerHelper<E> addListener(ListChangeListener<? super E> listener) {
             final int oldCapacity = listeners.length;
             if (locked) {
                 final int newCapacity = (size < oldCapacity) ? oldCapacity : oldCapacity * 3 / 2 + 1;
@@ -79,16 +74,16 @@ abstract class ListenerHelper<T> {
         }
 
         @Override
-        protected ListenerHelper<T> removeListener(ChangeListener<? super T> listener) {
+        protected ListListenerHelper<E> removeListener(ListChangeListener<? super E> listener) {
             for (int i = 0; i < size; i++) {
                 if (listeners[i].equals(listener)) {
                     if (size == 2) {
                         return new SingleListener<>(listeners[1 - i]);
                     }
                     final int numMoved = size - i - 1;
-                    final ChangeListener<? super T>[] oldListeners = listeners;
+                    final ListChangeListener<? super E>[] oldListeners = listeners;
                     if (locked) {
-                        listeners = new ChangeListener[listeners.length];
+                        listeners = new ListChangeListener[listeners.length];
                         System.arraycopy(oldListeners, 0, listeners, 0, i);
                     }
                     if (numMoved > 0) {
@@ -107,14 +102,14 @@ abstract class ListenerHelper<T> {
         }
 
         @Override
-        protected void fire(ObservableValue<T> observable, T oldValue, T newValue) {
-            final ChangeListener<? super T>[] listeners = this.listeners;
+        protected void fire(ListChangeListener.Change<? extends E> change) {
+            final ListChangeListener<? super E>[] listeners = this.listeners;
             final int size = this.size;
             try {
                 locked = true;
                 for (int i = 0; i < size; i++) {
                     try {
-                        listeners[i].onChanged(observable, oldValue, newValue);
+                        listeners[i].onChanged(change);
                     } catch (RuntimeException e) {
                         final Thread currentThread = Thread.currentThread();
                         currentThread.getUncaughtExceptionHandler().uncaughtException(currentThread, e);

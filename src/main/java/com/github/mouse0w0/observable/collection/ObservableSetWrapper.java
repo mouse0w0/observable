@@ -1,11 +1,14 @@
 package com.github.mouse0w0.observable.collection;
 
-import java.util.*;
+import java.util.AbstractSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class ObservableSetWrapper<E> extends AbstractSet<E> implements ObservableSet<E> {
 
-    private final List<SetChangeListener<? super E>> listeners = new LinkedList<>();
     private final Set<E> set;
+
+    private SetListenerHelper<E> listenerHelper;
 
     public ObservableSetWrapper(Set<E> set) {
         this.set = set;
@@ -13,19 +16,16 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
 
     @Override
     public void addListener(SetChangeListener<? super E> listener) {
-        Objects.requireNonNull(listener);
-        listeners.add(listener);
+        listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
     }
 
     @Override
     public void removeListener(SetChangeListener<? super E> listener) {
-        listeners.remove(listener);
+        listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
     }
 
-    protected void notifyChanged(SetChangeListener.Change<? super E> change) {
-        for (SetChangeListener listener : listeners) {
-            listener.onChanged(change);
-        }
+    protected void notifyChanged(SetChangeListener.Change<? extends E> change) {
+        SetListenerHelper.fire(listenerHelper, change);
     }
 
     @Override

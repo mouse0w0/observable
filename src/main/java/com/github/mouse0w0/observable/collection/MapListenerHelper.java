@@ -1,70 +1,65 @@
-package com.github.mouse0w0.observable.value;
+package com.github.mouse0w0.observable.collection;
 
 import java.util.Arrays;
 
-abstract class ListenerHelper<T> {
-    public static <T> ListenerHelper<T> addListener(ListenerHelper<T> helper, ChangeListener<? super T> listener) {
+abstract class MapListenerHelper<K, V> {
+    public static <K, V> MapListenerHelper<K, V> addListener(MapListenerHelper<K, V> helper, MapChangeListener<? super K, ? super V> listener) {
         if (listener == null) throw new NullPointerException("listener");
         return helper == null ? new SingleListener<>(listener) : helper.addListener(listener);
     }
 
-    public static <T> ListenerHelper<T> removeListener(ListenerHelper<T> helper, ChangeListener<? super T> listener) {
+    public static <K, V> MapListenerHelper<K, V> removeListener(MapListenerHelper<K, V> helper, MapChangeListener<? super K, ? super V> listener) {
         if (listener == null) throw new NullPointerException("listener");
         return helper == null ? new SingleListener<>(listener) : helper.removeListener(listener);
     }
 
-    public static <T> void fire(ListenerHelper<T> helper, ObservableValue<T> observable, T oldValue, T newValue) {
+    public static <K, V> void fire(MapListenerHelper<K, V> helper, MapChangeListener.Change<? extends K, ? extends V> change) {
         if (helper != null) {
-            helper.fire(observable, oldValue, newValue);
+            helper.fire(change);
         }
     }
 
-    protected abstract ListenerHelper<T> addListener(ChangeListener<? super T> listener);
+    protected abstract MapListenerHelper<K, V> addListener(MapChangeListener<? super K, ? super V> listener);
 
-    protected abstract ListenerHelper<T> removeListener(ChangeListener<? super T> listener);
+    protected abstract MapListenerHelper<K, V> removeListener(MapChangeListener<? super K, ? super V> listener);
 
-    protected abstract void fire(ObservableValue<T> observable, T oldValue, T newValue);
+    protected abstract void fire(MapChangeListener.Change<? extends K, ? extends V> change);
 
-    private static final class SingleListener<T> extends ListenerHelper<T> {
+    private static final class SingleListener<K, V> extends MapListenerHelper<K, V> {
 
-        private final ChangeListener<? super T> listener;
+        private final MapChangeListener<? super K, ? super V> listener;
 
-        public SingleListener(ChangeListener<? super T> listener) {
+        public SingleListener(MapChangeListener<? super K, ? super V> listener) {
             this.listener = listener;
         }
 
         @Override
-        protected ListenerHelper<T> addListener(ChangeListener<? super T> listener) {
+        protected MapListenerHelper<K, V> addListener(MapChangeListener<? super K, ? super V> listener) {
             return new ArrayListener<>(this.listener, listener);
         }
 
         @Override
-        protected ListenerHelper<T> removeListener(ChangeListener<? super T> listener) {
+        protected MapListenerHelper<K, V> removeListener(MapChangeListener<? super K, ? super V> listener) {
             return this.listener.equals(listener) ? null : this;
         }
 
         @Override
-        protected void fire(ObservableValue<T> observable, T oldValue, T newValue) {
-            try {
-                listener.onChanged(observable, oldValue, newValue);
-            } catch (RuntimeException e) {
-                final Thread currentThread = Thread.currentThread();
-                currentThread.getUncaughtExceptionHandler().uncaughtException(currentThread, e);
-            }
+        protected void fire(MapChangeListener.Change<? extends K, ? extends V> change) {
+            listener.onChanged(change);
         }
     }
 
-    private static final class ArrayListener<T> extends ListenerHelper<T> {
-        private ChangeListener<? super T>[] listeners;
+    private static final class ArrayListener<K, V> extends MapListenerHelper<K, V> {
+        private MapChangeListener<? super K, ? super V>[] listeners;
         private int size;
         private boolean locked;
 
-        public ArrayListener(ChangeListener<? super T> listener0, ChangeListener<? super T> listener1) {
-            listeners = new ChangeListener[]{listener0, listener1};
+        public ArrayListener(MapChangeListener<? super K, ? super V> listener0, MapChangeListener<? super K, ? super V> listener1) {
+            listeners = new MapChangeListener[]{listener0, listener1};
         }
 
         @Override
-        protected ListenerHelper<T> addListener(ChangeListener<? super T> listener) {
+        protected MapListenerHelper<K, V> addListener(MapChangeListener<? super K, ? super V> listener) {
             final int oldCapacity = listeners.length;
             if (locked) {
                 final int newCapacity = (size < oldCapacity) ? oldCapacity : oldCapacity * 3 / 2 + 1;
@@ -79,16 +74,16 @@ abstract class ListenerHelper<T> {
         }
 
         @Override
-        protected ListenerHelper<T> removeListener(ChangeListener<? super T> listener) {
+        protected MapListenerHelper<K, V> removeListener(MapChangeListener<? super K, ? super V> listener) {
             for (int i = 0; i < size; i++) {
                 if (listeners[i].equals(listener)) {
                     if (size == 2) {
                         return new SingleListener<>(listeners[1 - i]);
                     }
                     final int numMoved = size - i - 1;
-                    final ChangeListener<? super T>[] oldListeners = listeners;
+                    final MapChangeListener<? super K, ? super V>[] oldListeners = listeners;
                     if (locked) {
-                        listeners = new ChangeListener[listeners.length];
+                        listeners = new MapChangeListener[listeners.length];
                         System.arraycopy(oldListeners, 0, listeners, 0, i);
                     }
                     if (numMoved > 0) {
@@ -107,14 +102,14 @@ abstract class ListenerHelper<T> {
         }
 
         @Override
-        protected void fire(ObservableValue<T> observable, T oldValue, T newValue) {
-            final ChangeListener<? super T>[] listeners = this.listeners;
+        protected void fire(MapChangeListener.Change<? extends K, ? extends V> change) {
+            final MapChangeListener<? super K, ? super V>[] listeners = this.listeners;
             final int size = this.size;
             try {
                 locked = true;
                 for (int i = 0; i < size; i++) {
                     try {
-                        listeners[i].onChanged(observable, oldValue, newValue);
+                        listeners[i].onChanged(change);
                     } catch (RuntimeException e) {
                         final Thread currentThread = Thread.currentThread();
                         currentThread.getUncaughtExceptionHandler().uncaughtException(currentThread, e);

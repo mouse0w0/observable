@@ -19,7 +19,7 @@ public class SimpleFloatValue extends ObservableValueBase<Float> implements Muta
         }
         float oldValue = this.value;
         this.value = value;
-        fireValueChangedEvent(oldValue, value);
+        notifyChanged(oldValue, value);
     }
 
     @Override

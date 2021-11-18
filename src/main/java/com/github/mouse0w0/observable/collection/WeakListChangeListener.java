@@ -21,7 +21,7 @@ public final class WeakListChangeListener<E> implements ListChangeListener<E>, W
     }
 
     @Override
-    public void onChanged(Change<E> change) {
+    public void onChanged(Change<? extends E> change) {
         ListChangeListener<E> listener = ref.get();
         if (listener != null) {
             listener.onChanged(change);

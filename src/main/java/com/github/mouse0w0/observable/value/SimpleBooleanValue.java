@@ -35,7 +35,7 @@ public class SimpleBooleanValue extends ObservableValueBase<Boolean> implements 
         }
         boolean oldValue = this.value;
         this.value = value;
-        fireValueChangedEvent(oldValue, value);
+        notifyChanged(oldValue, value);
     }
 
     @Override

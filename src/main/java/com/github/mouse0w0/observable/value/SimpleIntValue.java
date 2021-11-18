@@ -19,7 +19,7 @@ public class SimpleIntValue extends ObservableValueBase<Integer> implements Muta
         }
         int oldValue = this.value;
         this.value = value;
-        fireValueChangedEvent(oldValue, value);
+        notifyChanged(oldValue, value);
     }
 
     @Override

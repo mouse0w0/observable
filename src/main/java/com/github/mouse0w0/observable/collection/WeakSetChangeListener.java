@@ -21,7 +21,7 @@ public final class WeakSetChangeListener<E> implements SetChangeListener<E>, Wea
     }
 
     @Override
-    public void onChanged(Change<E> change) {
+    public void onChanged(Change<? extends E> change) {
         SetChangeListener<E> listener = ref.get();
         if (listener != null) {
             listener.onChanged(change);

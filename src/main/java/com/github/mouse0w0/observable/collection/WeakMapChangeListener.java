@@ -21,7 +21,7 @@ public final class WeakMapChangeListener<K, V> implements MapChangeListener<K, V
     }
 
     @Override
-    public void onChanged(Change<K, V> change) {
+    public void onChanged(Change<? extends K, ? extends V> change) {
         MapChangeListener<K, V> listener = ref.get();
         if (listener != null) {
             listener.onChanged(change);

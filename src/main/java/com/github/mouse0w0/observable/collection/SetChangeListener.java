@@ -3,7 +3,7 @@ package com.github.mouse0w0.observable.collection;
 @FunctionalInterface
 public interface SetChangeListener<E> {
 
-    void onChanged(Change<E> change);
+    void onChanged(Change<? extends E> change);
 
     abstract class Change<E> {
 

@@ -5,7 +5,7 @@ import java.util.List;
 @FunctionalInterface
 public interface ListChangeListener<E> {
 
-    void onChanged(Change<E> change);
+    void onChanged(Change<? extends E> change);
 
     abstract class Change<E> {
 
