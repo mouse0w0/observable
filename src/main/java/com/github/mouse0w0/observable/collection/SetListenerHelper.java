@@ -45,7 +45,12 @@ abstract class SetListenerHelper<E> {
 
         @Override
         protected void fire(SetChangeListener.Change<? extends E> change) {
-            listener.onChanged(change);
+            try {
+                listener.onChanged(change);
+            } catch (RuntimeException e) {
+                final Thread currentThread = Thread.currentThread();
+                currentThread.getUncaughtExceptionHandler().uncaughtException(currentThread, e);
+            }
         }
     }
 

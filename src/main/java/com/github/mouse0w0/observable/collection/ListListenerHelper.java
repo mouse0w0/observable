@@ -45,7 +45,12 @@ abstract class ListListenerHelper<E> {
 
         @Override
         protected void fire(ListChangeListener.Change<? extends E> change) {
-            listener.onChanged(change);
+            try {
+                listener.onChanged(change);
+            } catch (RuntimeException e) {
+                final Thread currentThread = Thread.currentThread();
+                currentThread.getUncaughtExceptionHandler().uncaughtException(currentThread, e);
+            }
         }
     }
 

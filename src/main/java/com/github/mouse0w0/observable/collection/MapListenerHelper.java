@@ -45,7 +45,12 @@ abstract class MapListenerHelper<K, V> {
 
         @Override
         protected void fire(MapChangeListener.Change<? extends K, ? extends V> change) {
-            listener.onChanged(change);
+            try {
+                listener.onChanged(change);
+            } catch (RuntimeException e) {
+                final Thread currentThread = Thread.currentThread();
+                currentThread.getUncaughtExceptionHandler().uncaughtException(currentThread, e);
+            }
         }
     }
 
