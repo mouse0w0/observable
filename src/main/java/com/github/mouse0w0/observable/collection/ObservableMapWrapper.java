@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.collection;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 import java.util.*;
 
 public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements ObservableMap<K, V> {
@@ -66,8 +68,18 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
     }
 
     @Override
+    public void addListener(InvalidationListener listener) {
+        listenerHelper = MapListenerHelper.addListener(this, listenerHelper, listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        listenerHelper = MapListenerHelper.removeListener(listenerHelper, listener);
+    }
+
+    @Override
     public void addListener(MapChangeListener<? super K, ? super V> listener) {
-        listenerHelper = MapListenerHelper.addListener(listenerHelper, listener);
+        listenerHelper = MapListenerHelper.addListener(this, listenerHelper, listener);
     }
 
     @Override

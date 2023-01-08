@@ -30,12 +30,10 @@ public class SimpleBooleanValue extends ObservableValueBase<Boolean> implements 
 
     @Override
     public void set(boolean value) {
-        if (this.value == value) {
-            return;
+        if (this.value != value) {
+            this.value = value;
+            notifyChanged();
         }
-        boolean oldValue = this.value;
-        this.value = value;
-        notifyChanged(oldValue, value);
     }
 
     @Override

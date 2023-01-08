@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.Observable;
+
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -9,7 +11,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public interface ObservableValue<T> {
+public interface ObservableValue<T> extends Observable {
 
     T getValue();
 

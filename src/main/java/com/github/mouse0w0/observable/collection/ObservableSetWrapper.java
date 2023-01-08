@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.collection;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -15,8 +17,18 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
     }
 
     @Override
+    public void addListener(InvalidationListener listener) {
+        listenerHelper = SetListenerHelper.addListener(this, listenerHelper, listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
+    }
+
+    @Override
     public void addListener(SetChangeListener<? super E> listener) {
-        listenerHelper = SetListenerHelper.addListener(listenerHelper, listener);
+        listenerHelper = SetListenerHelper.addListener(this, listenerHelper, listener);
     }
 
     @Override

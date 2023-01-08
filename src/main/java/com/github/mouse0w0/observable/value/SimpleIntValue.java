@@ -14,12 +14,10 @@ public class SimpleIntValue extends ObservableValueBase<Integer> implements Muta
 
     @Override
     public void set(int value) {
-        if (this.value == value) {
-            return;
+        if (this.value != value) {
+            this.value = value;
+            notifyChanged();
         }
-        int oldValue = this.value;
-        this.value = value;
-        notifyChanged(oldValue, value);
     }
 
     @Override

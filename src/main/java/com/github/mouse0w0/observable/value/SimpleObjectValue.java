@@ -1,7 +1,5 @@
 package com.github.mouse0w0.observable.value;
 
-import java.util.Objects;
-
 public class SimpleObjectValue<T> extends ObservableValueBase<T> implements MutableObjectValue<T> {
     private T value;
 
@@ -29,12 +27,10 @@ public class SimpleObjectValue<T> extends ObservableValueBase<T> implements Muta
 
     @Override
     public void set(T value) {
-        if (Objects.equals(this.value, value)) {
-            return;
+        if (this.value != value) {
+            this.value = value;
+            notifyChanged();
         }
-        T oldValue = this.value;
-        this.value = value;
-        notifyChanged(oldValue, value);
     }
 
     @Override

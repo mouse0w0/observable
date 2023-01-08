@@ -1,9 +1,11 @@
 package com.github.mouse0w0.observable.collection;
 
+import com.github.mouse0w0.observable.Observable;
+
 import java.util.Collections;
 import java.util.Set;
 
-public interface ObservableSet<E> extends Set<E> {
+public interface ObservableSet<E> extends Set<E>, Observable {
 
     void addListener(SetChangeListener<? super E> listener);
 

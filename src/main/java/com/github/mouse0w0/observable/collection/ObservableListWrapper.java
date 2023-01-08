@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.collection;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 import java.util.*;
 import java.util.function.UnaryOperator;
 
@@ -14,8 +16,19 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     }
 
     @Override
+    public void addListener(InvalidationListener listener) {
+        listenerHelper = ListListenerHelper.addListener(this, listenerHelper, listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        listenerHelper = ListListenerHelper.removeListener(listenerHelper, listener);
+    }
+
+
+    @Override
     public void addListener(ListChangeListener<? super E> listener) {
-        listenerHelper = ListListenerHelper.addListener(listenerHelper, listener);
+        listenerHelper = ListListenerHelper.addListener(this, listenerHelper, listener);
     }
 
     @Override

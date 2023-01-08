@@ -14,12 +14,10 @@ public class SimpleFloatValue extends ObservableValueBase<Float> implements Muta
 
     @Override
     public void set(float value) {
-        if (Float.floatToIntBits(this.value) == Float.floatToIntBits(value)) {
-            return;
+        if (this.value != value) {
+            this.value = value;
+            notifyChanged();
         }
-        float oldValue = this.value;
-        this.value = value;
-        notifyChanged(oldValue, value);
     }
 
     @Override

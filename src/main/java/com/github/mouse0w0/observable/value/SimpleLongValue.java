@@ -14,12 +14,10 @@ public class SimpleLongValue extends ObservableValueBase<Long> implements Mutabl
 
     @Override
     public void set(long value) {
-        if (this.value == value) {
-            return;
+        if (this.value != value) {
+            this.value = value;
+            notifyChanged();
         }
-        long oldValue = this.value;
-        this.value = value;
-        notifyChanged(oldValue, value);
     }
 
     @Override
