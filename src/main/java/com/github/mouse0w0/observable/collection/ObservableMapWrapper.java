@@ -20,53 +20,6 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         this.map = map;
     }
 
-    private class SimpleChange extends MapChangeListener.Change<K, V> {
-
-        private final K key;
-        private final V removed;
-        private final V added;
-        private final boolean wasAdded;
-        private final boolean wasRemoved;
-
-        public SimpleChange(K key, V removed, V added, boolean wasAdded, boolean wasRemoved) {
-            super(ObservableMapWrapper.this);
-            this.key = key;
-            this.removed = removed;
-            this.added = added;
-            this.wasAdded = wasAdded;
-            this.wasRemoved = wasRemoved;
-        }
-
-        @Override
-        public boolean wasAdded() {
-            return wasAdded;
-        }
-
-        @Override
-        public boolean wasRemoved() {
-            return wasRemoved;
-        }
-
-        @Override
-        public K getKey() {
-            return key;
-        }
-
-        @Override
-        public V getAddedValue() {
-            return added;
-        }
-
-        @Override
-        public V getRemovedValue() {
-            return removed;
-        }
-    }
-
-    protected void notifyChanged(MapChangeListener.Change<? extends K, ? extends V> change) {
-        MapListenerHelper.fire(listenerHelper, change);
-    }
-
     @Override
     public void addListener(InvalidationListener listener) {
         listenerHelper = MapListenerHelper.addListener(this, listenerHelper, listener);
@@ -118,11 +71,13 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         if (map.containsKey(key)) {
             ret = map.put(key, value);
             if (ret == null && value != null || ret != null && !ret.equals(value)) {
-                notifyChanged(new SimpleChange(key, ret, value, true, true));
+                MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(key, ret, value, true, true);
+                MapListenerHelper.fire(listenerHelper, change);
             }
         } else {
             ret = map.put(key, value);
-            notifyChanged(new SimpleChange(key, ret, value, true, false));
+            MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(key, ret, value, true, false);
+            MapListenerHelper.fire(listenerHelper, change);
         }
         return ret;
     }
@@ -134,7 +89,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
             return null;
         }
         V ret = map.remove(key);
-        notifyChanged(new SimpleChange((K) key, ret, null, false, true));
+        MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange((K) key, ret, null, false, true);
+        MapListenerHelper.fire(listenerHelper, change);
         return ret;
     }
 
@@ -150,7 +106,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         for (Iterator<Entry<K, V>> i = map.entrySet().iterator(); i.hasNext(); ) {
             Entry<K, V> e = i.next();
             i.remove();
-            notifyChanged(new SimpleChange(e.getKey(), e.getValue(), null, false, true));
+            MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(e.getKey(), e.getValue(), null, false, true);
+            MapListenerHelper.fire(listenerHelper, change);
         }
     }
 
@@ -234,7 +191,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                 @Override
                 public void remove() {
                     entryIt.remove();
-                    notifyChanged(new SimpleChange(lastKey, lastValue, null, false, true));
+                    MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(lastKey, lastValue, null, false, true);
+                    MapListenerHelper.fire(listenerHelper, change);
                 }
 
             };
@@ -284,7 +242,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                     K key = e.getKey();
                     V value = e.getValue();
                     i.remove();
-                    notifyChanged(new SimpleChange(key, value, null, false, true));
+                    MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(key, value, null, false, true);
+                    MapListenerHelper.fire(listenerHelper, change);
                 }
             }
             return removed;
@@ -358,7 +317,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                 @Override
                 public void remove() {
                     entryIt.remove();
-                    notifyChanged(new SimpleChange(lastKey, lastValue, null, false, true));
+                    MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(lastKey, lastValue, null, false, true);
+                    MapListenerHelper.fire(listenerHelper, change);
                 }
 
             };
@@ -414,7 +374,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                     K key = e.getKey();
                     V value = e.getValue();
                     i.remove();
-                    notifyChanged(new SimpleChange(key, value, null, false, true));
+                    MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(key, value, null, false, true);
+                    MapListenerHelper.fire(listenerHelper, change);
                 }
             }
             return removed;
@@ -467,7 +428,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         @Override
         public V setValue(V value) {
             V oldValue = backingEntry.setValue(value);
-            notifyChanged(new SimpleChange(getKey(), oldValue, value, true, true));
+            MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(getKey(), oldValue, value, true, true);
+            MapListenerHelper.fire(listenerHelper, change);
             return oldValue;
         }
 
@@ -542,7 +504,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                 @Override
                 public void remove() {
                     backingIt.remove();
-                    notifyChanged(new SimpleChange(lastKey, lastValue, null, false, true));
+                    MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(lastKey, lastValue, null, false, true);
+                    MapListenerHelper.fire(listenerHelper, change);
                 }
             };
         }
@@ -578,7 +541,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
             boolean ret = map.entrySet().remove(o);
             if (ret) {
                 Entry<K, V> entry = (Entry<K, V>) o;
-                notifyChanged(new SimpleChange(entry.getKey(), entry.getValue(), null, false, true));
+                MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(entry.getKey(), entry.getValue(), null, false, true);
+                MapListenerHelper.fire(listenerHelper, change);
             }
             return ret;
         }
@@ -607,7 +571,8 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
                     K key = e.getKey();
                     V value = e.getValue();
                     i.remove();
-                    notifyChanged(new SimpleChange(key, value, null, false, true));
+                    MapChangeListener.Change<? extends K, ? extends V> change = new SimpleChange(key, value, null, false, true);
+                    MapListenerHelper.fire(listenerHelper, change);
                 }
             }
             return removed;
@@ -636,6 +601,49 @@ public class ObservableMapWrapper<K, V> extends AbstractMap<K, V> implements Obs
         @Override
         public int hashCode() {
             return map.entrySet().hashCode();
+        }
+    }
+
+    private class SimpleChange extends MapChangeListener.Change<K, V> {
+
+        private final K key;
+        private final V removed;
+        private final V added;
+        private final boolean wasAdded;
+        private final boolean wasRemoved;
+
+        public SimpleChange(K key, V removed, V added, boolean wasAdded, boolean wasRemoved) {
+            super(ObservableMapWrapper.this);
+            this.key = key;
+            this.removed = removed;
+            this.added = added;
+            this.wasAdded = wasAdded;
+            this.wasRemoved = wasRemoved;
+        }
+
+        @Override
+        public boolean wasAdded() {
+            return wasAdded;
+        }
+
+        @Override
+        public boolean wasRemoved() {
+            return wasRemoved;
+        }
+
+        @Override
+        public K getKey() {
+            return key;
+        }
+
+        @Override
+        public V getAddedValue() {
+            return added;
+        }
+
+        @Override
+        public V getRemovedValue() {
+            return removed;
         }
     }
 }

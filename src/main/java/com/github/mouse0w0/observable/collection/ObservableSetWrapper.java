@@ -36,14 +36,11 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
         listenerHelper = SetListenerHelper.removeListener(listenerHelper, listener);
     }
 
-    protected void notifyChanged(SetChangeListener.Change<? extends E> change) {
-        SetListenerHelper.fire(listenerHelper, change);
-    }
-
     @Override
     public boolean add(E e) {
         if (set.add(e)) {
-            notifyChanged(new AddedChange(e));
+            SetChangeListener.Change<? extends E> change = new AddedChange(e);
+            SetListenerHelper.fire(listenerHelper, change);
             return true;
         }
         return false;
@@ -52,7 +49,8 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
     @Override
     public boolean remove(Object o) {
         if (set.remove(o)) {
-            notifyChanged(new RemovedChange((E) o));
+            SetChangeListener.Change<? extends E> change = new RemovedChange((E) o);
+            SetListenerHelper.fire(listenerHelper, change);
             return true;
         }
         return false;
@@ -79,7 +77,8 @@ public class ObservableSetWrapper<E> extends AbstractSet<E> implements Observabl
             @Override
             public void remove() {
                 iterator.remove();
-                notifyChanged(new RemovedChange(lastElement));
+                SetChangeListener.Change<? extends E> change = new RemovedChange(lastElement);
+                SetListenerHelper.fire(listenerHelper, change);
             }
         };
     }

@@ -36,27 +36,26 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
         listenerHelper = ListListenerHelper.removeListener(listenerHelper, listener);
     }
 
-    protected void notifyChanged(ListChangeListener.Change<? extends E> change) {
-        ListListenerHelper.fire(listenerHelper, change);
-    }
-
     @Override
     public E set(int index, E element) {
         E removed = list.set(index, element);
-        notifyChanged(new BaseListChange.ReplacedChange<>(this, element, removed, index, index + 1));
+        ListChangeListener.Change<? extends E> change = new BaseListChange.ReplacedChange<>(this, element, removed, index, index + 1);
+        ListListenerHelper.fire(listenerHelper, change);
         return removed;
     }
 
     @Override
     public void add(int index, E element) {
         list.add(index, element);
-        notifyChanged(new BaseListChange.AddedChange<>(this, element, index, index + 1));
+        ListChangeListener.Change<? extends E> change = new BaseListChange.AddedChange<>(this, element, index, index + 1);
+        ListListenerHelper.fire(listenerHelper, change);
     }
 
     @Override
     public E remove(int index) {
         E element = list.remove(index);
-        notifyChanged(new BaseListChange.RemovedChange<>(this, element, index, index + 1));
+        ListChangeListener.Change<? extends E> change = new BaseListChange.RemovedChange<>(this, element, index, index + 1);
+        ListListenerHelper.fire(listenerHelper, change);
         return element;
     }
 
@@ -64,13 +63,15 @@ public class ObservableListWrapper<E> extends AbstractList<E> implements Observa
     public void clear() {
         List<E> removed = new ArrayList<>(list);
         list.clear();
-        notifyChanged(new BaseListChange.RemovedChange<>(this, removed, 0, removed.size()));
+        ListChangeListener.Change<? extends E> change = new BaseListChange.RemovedChange<>(this, removed, 0, removed.size());
+        ListListenerHelper.fire(listenerHelper, change);
     }
 
     @Override
     public void sort(Comparator<? super E> c) {
         list.sort(c);
-        notifyChanged(new BaseListChange.SortedChange<>(this, 0, size()));
+        ListChangeListener.Change<? extends E> change = new BaseListChange.SortedChange<>(this, 0, size());
+        ListListenerHelper.fire(listenerHelper, change);
     }
 
     @Override
