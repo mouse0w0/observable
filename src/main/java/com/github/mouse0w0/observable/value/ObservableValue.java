@@ -48,30 +48,23 @@ public interface ObservableValue<T> {
     default Optional<T> filter(Predicate<? super T> predicate) {
         Objects.requireNonNull(predicate);
         final T value = getValue();
-        if (value == null)
+        if (value == null) {
             return Optional.empty();
-        else
+        } else {
             return predicate.test(value) ? Optional.of(value) : Optional.empty();
+        }
     }
 
     default <U> Optional<U> map(Function<? super T, ? extends U> mapper) {
         Objects.requireNonNull(mapper);
         final T value = getValue();
-        if (value == null)
-            return Optional.empty();
-        else {
-            return Optional.ofNullable(mapper.apply(value));
-        }
+        return value == null ? Optional.empty() : Optional.ofNullable(mapper.apply(value));
     }
 
     default <U> Optional<U> flatMap(Function<? super T, Optional<U>> mapper) {
         Objects.requireNonNull(mapper);
         final T value = getValue();
-        if (value == null)
-            return Optional.empty();
-        else {
-            return Objects.requireNonNull(mapper.apply(value));
-        }
+        return value == null ? Optional.empty() : Objects.requireNonNull(mapper.apply(value));
     }
 
     default T orElse(T other) {
@@ -103,10 +96,6 @@ public interface ObservableValue<T> {
 
     default Stream<T> stream() {
         final T value = getValue();
-        if (value == null) {
-            return Stream.empty();
-        } else {
-            return Stream.of(value);
-        }
+        return value == null ? Stream.empty() : Stream.of(value);
     }
 }
