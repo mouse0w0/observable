@@ -34,33 +34,23 @@ public class ReadOnlyLongWrapper extends SimpleLongValue implements ReadOnlyWrap
         }
 
         @Override
-        public byte getByte() {
-            return ReadOnlyLongWrapper.this.getByte();
+        public int intValue() {
+            return ReadOnlyLongWrapper.this.intValue();
         }
 
         @Override
-        public short getShort() {
-            return ReadOnlyLongWrapper.this.getShort();
+        public long longValue() {
+            return ReadOnlyLongWrapper.this.longValue();
         }
 
         @Override
-        public int getInt() {
-            return ReadOnlyLongWrapper.this.getInt();
+        public float floatValue() {
+            return ReadOnlyLongWrapper.this.floatValue();
         }
 
         @Override
-        public long getLong() {
-            return ReadOnlyLongWrapper.this.getLong();
-        }
-
-        @Override
-        public float getFloat() {
-            return ReadOnlyLongWrapper.this.getFloat();
-        }
-
-        @Override
-        public double getDouble() {
-            return ReadOnlyLongWrapper.this.getDouble();
+        public double doubleValue() {
+            return ReadOnlyLongWrapper.this.doubleValue();
         }
 
         @Override

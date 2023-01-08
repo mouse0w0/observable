@@ -34,33 +34,23 @@ public class ReadOnlyDoubleWrapper extends SimpleDoubleValue implements ReadOnly
         }
 
         @Override
-        public byte getByte() {
-            return ReadOnlyDoubleWrapper.this.getByte();
+        public int intValue() {
+            return ReadOnlyDoubleWrapper.this.intValue();
         }
 
         @Override
-        public short getShort() {
-            return ReadOnlyDoubleWrapper.this.getShort();
+        public long longValue() {
+            return ReadOnlyDoubleWrapper.this.longValue();
         }
 
         @Override
-        public int getInt() {
-            return ReadOnlyDoubleWrapper.this.getInt();
+        public float floatValue() {
+            return ReadOnlyDoubleWrapper.this.floatValue();
         }
 
         @Override
-        public long getLong() {
-            return ReadOnlyDoubleWrapper.this.getLong();
-        }
-
-        @Override
-        public float getFloat() {
-            return ReadOnlyDoubleWrapper.this.getFloat();
-        }
-
-        @Override
-        public double getDouble() {
-            return ReadOnlyDoubleWrapper.this.getDouble();
+        public double doubleValue() {
+            return ReadOnlyDoubleWrapper.this.doubleValue();
         }
 
         @Override

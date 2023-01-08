@@ -1,7 +1,5 @@
 package com.github.mouse0w0.observable.value;
 
-import java.util.Objects;
-
 public class SimpleBooleanValue extends ObservableValueBase<Boolean> implements WritableBooleanValue {
     private boolean value;
 
@@ -13,27 +11,22 @@ public class SimpleBooleanValue extends ObservableValueBase<Boolean> implements 
     }
 
     @Override
-    public void setValue(Boolean value) {
-        Objects.requireNonNull(value);
-        set(value);
-    }
-
-    @Override
     public boolean get() {
+        valid = true;
         return value;
-    }
-
-    @Override
-    public Boolean getValue() {
-        return get();
     }
 
     @Override
     public void set(boolean value) {
         if (this.value != value) {
             this.value = value;
-            notifyChanged();
+            invalidate();
         }
+    }
+
+    @Override
+    public void setValue(Boolean value) {
+        set(value);
     }
 
     @Override

@@ -12,25 +12,21 @@ public class SimpleStringValue extends ObservableValueBase<String> implements Wr
 
     @Override
     public String get() {
+        valid = true;
         return value;
-    }
-
-    @Override
-    public String getValue() {
-        return get();
-    }
-
-    @Override
-    public void setValue(String value) {
-        set(value);
     }
 
     @Override
     public void set(String value) {
         if (this.value != value) {
             this.value = value;
-            notifyChanged();
+            invalidate();
         }
+    }
+
+    @Override
+    public void setValue(String value) {
+        set(value);
     }
 
     @Override

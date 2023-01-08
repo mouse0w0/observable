@@ -12,25 +12,21 @@ public class SimpleObjectValue<T> extends ObservableValueBase<T> implements Writ
 
     @Override
     public T get() {
+        valid = true;
         return value;
-    }
-
-    @Override
-    public T getValue() {
-        return get();
-    }
-
-    @Override
-    public void setValue(T value) {
-        set(value);
     }
 
     @Override
     public void set(T value) {
         if (this.value != value) {
             this.value = value;
-            notifyChanged();
+            invalidate();
         }
+    }
+
+    @Override
+    public void setValue(T value) {
+        set(value);
     }
 
     @Override

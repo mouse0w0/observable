@@ -34,33 +34,23 @@ public class ReadOnlyFloatWrapper extends SimpleFloatValue implements ReadOnlyWr
         }
 
         @Override
-        public byte getByte() {
-            return ReadOnlyFloatWrapper.this.getByte();
+        public int intValue() {
+            return ReadOnlyFloatWrapper.this.intValue();
         }
 
         @Override
-        public short getShort() {
-            return ReadOnlyFloatWrapper.this.getShort();
+        public long longValue() {
+            return ReadOnlyFloatWrapper.this.longValue();
         }
 
         @Override
-        public int getInt() {
-            return ReadOnlyFloatWrapper.this.getInt();
+        public float floatValue() {
+            return ReadOnlyFloatWrapper.this.floatValue();
         }
 
         @Override
-        public long getLong() {
-            return ReadOnlyFloatWrapper.this.getLong();
-        }
-
-        @Override
-        public float getFloat() {
-            return ReadOnlyFloatWrapper.this.getFloat();
-        }
-
-        @Override
-        public double getDouble() {
-            return ReadOnlyFloatWrapper.this.getDouble();
+        public double doubleValue() {
+            return ReadOnlyFloatWrapper.this.doubleValue();
         }
 
         @Override

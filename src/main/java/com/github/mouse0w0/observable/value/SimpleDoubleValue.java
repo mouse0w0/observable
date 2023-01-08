@@ -1,7 +1,5 @@
 package com.github.mouse0w0.observable.value;
 
-import java.util.Objects;
-
 public class SimpleDoubleValue extends ObservableValueBase<Double> implements WritableDoubleValue {
     private double value;
 
@@ -13,57 +11,22 @@ public class SimpleDoubleValue extends ObservableValueBase<Double> implements Wr
     }
 
     @Override
+    public double get() {
+        valid = true;
+        return value;
+    }
+
+    @Override
     public void set(double value) {
         if (this.value != value) {
             this.value = value;
-            notifyChanged();
+            invalidate();
         }
     }
 
     @Override
     public void setValue(Double value) {
-        Objects.requireNonNull(value);
         set(value);
-    }
-
-    @Override
-    public double get() {
-        return value;
-    }
-
-    @Override
-    public byte getByte() {
-        return (byte) value;
-    }
-
-    @Override
-    public short getShort() {
-        return (short) value;
-    }
-
-    @Override
-    public int getInt() {
-        return (int) value;
-    }
-
-    @Override
-    public long getLong() {
-        return (long) value;
-    }
-
-    @Override
-    public float getFloat() {
-        return (float) value;
-    }
-
-    @Override
-    public double getDouble() {
-        return value;
-    }
-
-    @Override
-    public Double getValue() {
-        return get();
     }
 
     @Override

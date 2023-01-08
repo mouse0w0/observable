@@ -4,6 +4,7 @@ import com.github.mouse0w0.observable.InvalidationListener;
 
 public abstract class ObservableValueBase<T> implements ObservableValue<T> {
 
+    protected boolean valid;
     private ListenerHelper<T> listenerHelper;
 
     @Override
@@ -26,7 +27,10 @@ public abstract class ObservableValueBase<T> implements ObservableValue<T> {
         listenerHelper = ListenerHelper.removeListener(listenerHelper, listener);
     }
 
-    protected void notifyChanged() {
-        ListenerHelper.fire(listenerHelper);
+    protected void invalidate() {
+        if (valid) {
+            valid = false;
+            ListenerHelper.fire(listenerHelper);
+        }
     }
 }
