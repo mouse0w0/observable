@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import java.util.Objects;
 
-public class SimpleBooleanValue extends ObservableValueBase<Boolean> implements MutableBooleanValue {
+public class SimpleBooleanValue extends ObservableValueBase<Boolean> implements WritableBooleanValue {
     private boolean value;
 
     public SimpleBooleanValue() {

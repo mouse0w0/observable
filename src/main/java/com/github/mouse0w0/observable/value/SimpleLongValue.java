@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import java.util.Objects;
 
-public class SimpleLongValue extends ObservableValueBase<Long> implements MutableLongValue {
+public class SimpleLongValue extends ObservableValueBase<Long> implements WritableLongValue {
     private long value;
 
     public SimpleLongValue() {

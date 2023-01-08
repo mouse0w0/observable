@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import java.util.Objects;
 
-public class SimpleDoubleValue extends ObservableValueBase<Double> implements MutableDoubleValue {
+public class SimpleDoubleValue extends ObservableValueBase<Double> implements WritableDoubleValue {
     private double value;
 
     public SimpleDoubleValue() {

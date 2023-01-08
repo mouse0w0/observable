@@ -2,14 +2,14 @@ package com.github.mouse0w0.observable.binding;
 
 import com.github.mouse0w0.observable.WeakListener;
 import com.github.mouse0w0.observable.value.ChangeListener;
-import com.github.mouse0w0.observable.value.MutableValue;
 import com.github.mouse0w0.observable.value.ObservableValue;
+import com.github.mouse0w0.observable.value.WritableValue;
 
 import java.lang.ref.WeakReference;
 
 public abstract class BidirectionalBinding<T> implements ChangeListener<T>, WeakListener {
 
-    public static <T> BidirectionalBinding<T> bind(MutableValue<T> source, MutableValue<T> target) {
+    public static <T> BidirectionalBinding<T> bind(WritableValue<T> source, WritableValue<T> target) {
         checkParameters(source, target);
         BidirectionalBinding<T> binding = new ObjectBinding<>(source, target);
         source.setValue(target.getValue());
@@ -19,7 +19,7 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static <T> void unbind(MutableValue<T> source, MutableValue<T> target) {
+    public static <T> void unbind(WritableValue<T> source, WritableValue<T> target) {
         checkParameters(source, target);
         ForRemovalBinding forRemoval = new ForRemovalBinding(source, target);
         source.removeListener(forRemoval);
@@ -76,11 +76,11 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
 
     private static class ObjectBinding<T> extends BidirectionalBinding<T> {
 
-        private final WeakReference<MutableValue<T>> source;
-        private final WeakReference<MutableValue<T>> target;
+        private final WeakReference<WritableValue<T>> source;
+        private final WeakReference<WritableValue<T>> target;
         private boolean updating = false;
 
-        private ObjectBinding(MutableValue<T> source, MutableValue<T> target) {
+        private ObjectBinding(WritableValue<T> source, WritableValue<T> target) {
             super(source, target);
             this.source = new WeakReference<>(source);
             this.target = new WeakReference<>(target);
@@ -99,8 +99,8 @@ public abstract class BidirectionalBinding<T> implements ChangeListener<T>, Weak
         @Override
         public void onChanged(ObservableValue<? extends T> observable, T oldValue, T newValue) {
             if (!updating) {
-                MutableValue<T> source = this.source.get();
-                MutableValue<T> target = this.target.get();
+                WritableValue<T> source = this.source.get();
+                WritableValue<T> target = this.target.get();
                 if (source == null || target == null) {
                     if (source != null) {
                         source.removeListener(this);

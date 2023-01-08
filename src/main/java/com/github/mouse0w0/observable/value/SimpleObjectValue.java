@@ -1,6 +1,6 @@
 package com.github.mouse0w0.observable.value;
 
-public class SimpleObjectValue<T> extends ObservableValueBase<T> implements MutableObjectValue<T> {
+public class SimpleObjectValue<T> extends ObservableValueBase<T> implements WritableObjectValue<T> {
     private T value;
 
     public SimpleObjectValue() {

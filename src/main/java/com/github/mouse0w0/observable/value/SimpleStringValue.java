@@ -1,6 +1,6 @@
 package com.github.mouse0w0.observable.value;
 
-public class SimpleStringValue extends ObservableValueBase<String> implements MutableStringValue {
+public class SimpleStringValue extends ObservableValueBase<String> implements WritableStringValue {
     private String value;
 
     public SimpleStringValue() {

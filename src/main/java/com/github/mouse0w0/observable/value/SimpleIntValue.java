@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import java.util.Objects;
 
-public class SimpleIntValue extends ObservableValueBase<Integer> implements MutableIntValue {
+public class SimpleIntValue extends ObservableValueBase<Integer> implements WritableIntValue {
     private int value;
 
     public SimpleIntValue() {

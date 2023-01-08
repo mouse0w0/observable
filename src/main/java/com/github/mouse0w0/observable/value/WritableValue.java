@@ -2,15 +2,15 @@ package com.github.mouse0w0.observable.value;
 
 import com.github.mouse0w0.observable.binding.BidirectionalBinding;
 
-public interface MutableValue<T> extends ObservableValue<T> {
+public interface WritableValue<T> extends ObservableValue<T> {
 
     void setValue(T value);
 
-    default void bindBidirectional(MutableValue<T> other) {
+    default void bindBidirectional(WritableValue<T> other) {
         BidirectionalBinding.bind(this, other);
     }
 
-    default void unbindBidirectional(MutableValue<T> other) {
+    default void unbindBidirectional(WritableValue<T> other) {
         BidirectionalBinding.unbind(this, other);
     }
 }

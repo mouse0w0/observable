@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import java.util.Objects;
 
-public class SimpleFloatValue extends ObservableValueBase<Float> implements MutableFloatValue {
+public class SimpleFloatValue extends ObservableValueBase<Float> implements WritableFloatValue {
     private float value;
 
     public SimpleFloatValue() {
