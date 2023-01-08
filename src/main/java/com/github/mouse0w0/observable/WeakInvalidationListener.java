@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable;
 
 import java.lang.ref.WeakReference;
 
-public class WeakInvalidationListener implements InvalidationListener, WeakListener {
+public final class WeakInvalidationListener implements InvalidationListener, WeakListener {
     private final WeakReference<InvalidationListener> ref;
 
     public WeakInvalidationListener(InvalidationListener listener) {
