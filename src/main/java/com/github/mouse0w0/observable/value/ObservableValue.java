@@ -13,11 +13,11 @@ import java.util.stream.Stream;
 
 public interface ObservableValue<T> extends Observable {
 
-    T getValue();
-
     void addListener(ChangeListener<? super T> listener);
 
     void removeListener(ChangeListener<? super T> listener);
+
+    T getValue();
 
     default Optional<T> optional() {
         return Optional.ofNullable(getValue());

@@ -4,7 +4,7 @@ import com.github.mouse0w0.observable.InvalidationListener;
 
 import java.util.Arrays;
 
-abstract class ListenerHelper<T> {
+public abstract class ListenerHelper<T> {
     public static <T> ListenerHelper<T> addListener(ObservableValue<T> observable, ListenerHelper<T> helper, InvalidationListener listener) {
         if (listener == null) throw new NullPointerException("listener");
         return helper == null ? new SingleInvalidation<>(observable, listener) : helper.addListener(listener);

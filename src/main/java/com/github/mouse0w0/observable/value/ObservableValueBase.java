@@ -4,7 +4,7 @@ import com.github.mouse0w0.observable.InvalidationListener;
 
 public abstract class ObservableValueBase<T> implements ObservableValue<T> {
 
-    protected boolean valid;
+    protected boolean valid = true;
     private ListenerHelper<T> listenerHelper;
 
     @Override
