@@ -1,6 +1,6 @@
 package com.github.mouse0w0.observable.value;
 
-public interface ObservableIntValue extends ObservableNumberValue<Integer> {
+public interface ObservableIntegerValue extends ObservableNumberValue<Integer> {
 
     int get();
 

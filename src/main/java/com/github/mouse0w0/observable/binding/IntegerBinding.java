@@ -5,9 +5,9 @@ import com.github.mouse0w0.observable.collection.ObservableCollections;
 import com.github.mouse0w0.observable.collection.ObservableList;
 import com.github.mouse0w0.observable.value.ChangeListener;
 import com.github.mouse0w0.observable.value.ListenerHelper;
-import com.github.mouse0w0.observable.value.ObservableIntValue;
+import com.github.mouse0w0.observable.value.ObservableIntegerValue;
 
-public abstract class IntBinding implements Binding<Integer>, ObservableIntValue {
+public abstract class IntegerBinding implements Binding<Integer>, ObservableIntegerValue {
 
     private int value;
     private boolean valid;

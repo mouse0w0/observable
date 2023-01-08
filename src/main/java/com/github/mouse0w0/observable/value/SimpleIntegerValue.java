@@ -1,12 +1,12 @@
 package com.github.mouse0w0.observable.value;
 
-public class SimpleIntValue extends ObservableValueBase<Integer> implements WritableIntValue {
+public class SimpleIntegerValue extends ObservableValueBase<Integer> implements WritableIntegerValue {
     private int value;
 
-    public SimpleIntValue() {
+    public SimpleIntegerValue() {
     }
 
-    public SimpleIntValue(int value) {
+    public SimpleIntegerValue(int value) {
         this.value = value;
     }
 
