@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 public class ReadOnlyLongWrapper extends SimpleLongValue implements ReadOnlyWrapper<Long> {
 
     private ReadOnlyLongValue readOnlyLongValue;
@@ -64,6 +66,16 @@ public class ReadOnlyLongWrapper extends SimpleLongValue implements ReadOnlyWrap
         @Override
         public Long getValue() {
             return ReadOnlyLongWrapper.this.getValue();
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            ReadOnlyLongWrapper.this.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            ReadOnlyLongWrapper.this.removeListener(listener);
         }
 
         @Override

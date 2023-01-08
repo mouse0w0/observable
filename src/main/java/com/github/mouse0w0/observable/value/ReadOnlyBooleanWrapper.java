@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements ReadOnlyWrapper<Boolean> {
 
     private ReadOnlyBooleanValue readOnlyBooleanValue;
@@ -37,6 +39,16 @@ public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements ReadOn
         }
 
         @Override
+        public void addListener(InvalidationListener listener) {
+            ReadOnlyBooleanWrapper.this.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            ReadOnlyBooleanWrapper.this.removeListener(listener);
+        }
+
+        @Override
         public void addListener(ChangeListener<? super Boolean> listener) {
             ReadOnlyBooleanWrapper.this.addListener(listener);
         }
@@ -52,5 +64,7 @@ public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements ReadOn
                     "value=" + ReadOnlyBooleanWrapper.this.get() +
                     '}';
         }
+
+
     }
 }

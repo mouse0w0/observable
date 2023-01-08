@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.collection;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -62,6 +64,16 @@ public final class ObservableCollections {
         }
 
         @Override
+        public void addListener(InvalidationListener listener) {
+            list.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            list.removeListener(listener);
+        }
+
+        @Override
         public void addListener(ListChangeListener<? super E> listener) {
             list.addListener(listener);
         }
@@ -88,6 +100,16 @@ public final class ObservableCollections {
 
         public UnmodifiableObservableSet(ObservableSet<E> set) {
             this.set = set;
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            set.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            set.removeListener(listener);
         }
 
         @Override
@@ -217,6 +239,16 @@ public final class ObservableCollections {
                 entryset = Collections.unmodifiableMap(map).entrySet();
             }
             return entryset;
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            map.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            map.removeListener(listener);
         }
 
         @Override

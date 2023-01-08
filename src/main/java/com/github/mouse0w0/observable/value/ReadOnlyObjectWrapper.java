@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements ReadOnlyWrapper<T> {
 
     private ReadOnlyObjectValue readOnlyObjectValue;
@@ -28,8 +30,23 @@ public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements Re
 
     private class ReadOnlyObjectValue implements ObservableObjectValue<T> {
         @Override
+        public T get() {
+            return ReadOnlyObjectWrapper.this.get();
+        }
+
+        @Override
         public T getValue() {
             return ReadOnlyObjectWrapper.this.getValue();
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            ReadOnlyObjectWrapper.this.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            ReadOnlyObjectWrapper.this.removeListener(listener);
         }
 
         @Override
@@ -43,15 +60,12 @@ public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements Re
         }
 
         @Override
-        public T get() {
-            return getValue();
-        }
-
-        @Override
         public String toString() {
             return "ReadOnlyObjectValue{" +
                     "value=" + ReadOnlyObjectWrapper.this.get() +
                     '}';
         }
+
+
     }
 }

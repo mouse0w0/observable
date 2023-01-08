@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 public class ReadOnlyStringWrapper extends SimpleStringValue implements ReadOnlyWrapper<String> {
 
     private ReadOnlyStringValue readOnlyStringValue;
@@ -28,8 +30,23 @@ public class ReadOnlyStringWrapper extends SimpleStringValue implements ReadOnly
 
     private class ReadOnlyStringValue implements ObservableStringValue {
         @Override
+        public String get() {
+            return ReadOnlyStringWrapper.this.get();
+        }
+
+        @Override
         public String getValue() {
             return ReadOnlyStringWrapper.this.getValue();
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            ReadOnlyStringWrapper.this.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            ReadOnlyStringWrapper.this.removeListener(listener);
         }
 
         @Override
@@ -43,15 +60,12 @@ public class ReadOnlyStringWrapper extends SimpleStringValue implements ReadOnly
         }
 
         @Override
-        public String get() {
-            return getValue();
-        }
-
-        @Override
         public String toString() {
             return "ReadOnlyStringValue{" +
                     "value=" + ReadOnlyStringWrapper.this.get() +
                     '}';
         }
+
+
     }
 }

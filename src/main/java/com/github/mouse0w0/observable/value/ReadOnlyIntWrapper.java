@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 public class ReadOnlyIntWrapper extends SimpleIntValue implements ReadOnlyWrapper<Integer> {
 
     private ReadOnlyIntValue readOnlyIntValue;
@@ -64,6 +66,16 @@ public class ReadOnlyIntWrapper extends SimpleIntValue implements ReadOnlyWrappe
         @Override
         public Integer getValue() {
             return ReadOnlyIntWrapper.this.getValue();
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            ReadOnlyIntWrapper.this.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            ReadOnlyIntWrapper.this.removeListener(listener);
         }
 
         @Override

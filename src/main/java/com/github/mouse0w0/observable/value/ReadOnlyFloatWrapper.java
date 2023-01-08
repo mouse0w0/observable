@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 public class ReadOnlyFloatWrapper extends SimpleFloatValue implements ReadOnlyWrapper<Float> {
 
     private ReadOnlyFloatValue readOnlyFloatValue;
@@ -64,6 +66,16 @@ public class ReadOnlyFloatWrapper extends SimpleFloatValue implements ReadOnlyWr
         @Override
         public Float getValue() {
             return ReadOnlyFloatWrapper.this.getValue();
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            ReadOnlyFloatWrapper.this.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            ReadOnlyFloatWrapper.this.removeListener(listener);
         }
 
         @Override

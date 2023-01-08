@@ -1,5 +1,7 @@
 package com.github.mouse0w0.observable.value;
 
+import com.github.mouse0w0.observable.InvalidationListener;
+
 public class ReadOnlyDoubleWrapper extends SimpleDoubleValue implements ReadOnlyWrapper<Double> {
 
     private ReadOnlyDoubleValue readOnlyDoubleValue;
@@ -64,6 +66,16 @@ public class ReadOnlyDoubleWrapper extends SimpleDoubleValue implements ReadOnly
         @Override
         public Double getValue() {
             return ReadOnlyDoubleWrapper.this.getValue();
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            ReadOnlyDoubleWrapper.this.addListener(listener);
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            ReadOnlyDoubleWrapper.this.removeListener(listener);
         }
 
         @Override
