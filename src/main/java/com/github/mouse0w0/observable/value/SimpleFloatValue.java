@@ -3,8 +3,8 @@ package com.github.mouse0w0.observable.value;
 import com.github.mouse0w0.observable.InvalidationListener;
 
 public class SimpleFloatValue implements WritableFloatValue, ObservableValue<Float> {
-    private boolean valid = true;
     private float value;
+    private boolean valid = true;
     private ListenerHelper<Float> listenerHelper;
 
     public SimpleFloatValue() {

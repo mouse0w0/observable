@@ -3,8 +3,8 @@ package com.github.mouse0w0.observable.value;
 import com.github.mouse0w0.observable.InvalidationListener;
 
 public class SimpleIntegerValue implements WritableIntegerValue, ObservableValue<Integer> {
-    private boolean valid = true;
     private int value;
+    private boolean valid = true;
     private ListenerHelper<Integer> listenerHelper;
 
     public SimpleIntegerValue() {

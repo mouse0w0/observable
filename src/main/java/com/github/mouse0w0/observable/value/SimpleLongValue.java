@@ -3,8 +3,8 @@ package com.github.mouse0w0.observable.value;
 import com.github.mouse0w0.observable.InvalidationListener;
 
 public class SimpleLongValue implements WritableLongValue, ObservableValue<Long> {
-    private boolean valid = true;
     private long value;
+    private boolean valid = true;
     private ListenerHelper<Long> listenerHelper;
 
     public SimpleLongValue() {
