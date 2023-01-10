@@ -8,7 +8,6 @@ import com.github.mouse0w0.observable.value.ListenerHelper;
 import com.github.mouse0w0.observable.value.ObservableBooleanValue;
 
 public abstract class BooleanBinding implements Binding<Boolean>, ObservableBooleanValue {
-
     private boolean value;
     private boolean valid;
     private ListenerHelper<Boolean> listenerHelper;

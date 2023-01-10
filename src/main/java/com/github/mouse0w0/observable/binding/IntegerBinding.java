@@ -8,7 +8,6 @@ import com.github.mouse0w0.observable.value.ListenerHelper;
 import com.github.mouse0w0.observable.value.ObservableIntegerValue;
 
 public abstract class IntegerBinding implements Binding<Integer>, ObservableIntegerValue {
-
     private int value;
     private boolean valid;
     private ListenerHelper<Integer> listenerHelper;

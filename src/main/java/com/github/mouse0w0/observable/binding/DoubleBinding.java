@@ -8,7 +8,6 @@ import com.github.mouse0w0.observable.value.ListenerHelper;
 import com.github.mouse0w0.observable.value.ObservableDoubleValue;
 
 public abstract class DoubleBinding implements Binding<Double>, ObservableDoubleValue {
-
     private double value;
     private boolean valid;
     private ListenerHelper<Double> listenerHelper;

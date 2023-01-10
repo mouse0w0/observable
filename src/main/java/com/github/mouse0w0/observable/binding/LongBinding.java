@@ -8,7 +8,6 @@ import com.github.mouse0w0.observable.value.ListenerHelper;
 import com.github.mouse0w0.observable.value.ObservableLongValue;
 
 public abstract class LongBinding implements Binding<Long>, ObservableLongValue {
-
     private long value;
     private boolean valid;
     private ListenerHelper<Long> listenerHelper;

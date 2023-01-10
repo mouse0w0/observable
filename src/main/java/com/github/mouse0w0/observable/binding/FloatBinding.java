@@ -8,7 +8,6 @@ import com.github.mouse0w0.observable.value.ListenerHelper;
 import com.github.mouse0w0.observable.value.ObservableFloatValue;
 
 public abstract class FloatBinding implements Binding<Float>, ObservableFloatValue {
-
     private float value;
     private boolean valid;
     private ListenerHelper<Float> listenerHelper;

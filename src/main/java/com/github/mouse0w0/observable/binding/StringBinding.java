@@ -8,7 +8,6 @@ import com.github.mouse0w0.observable.value.ListenerHelper;
 import com.github.mouse0w0.observable.value.ObservableStringValue;
 
 public abstract class StringBinding implements Binding<String>, ObservableStringValue {
-
     private String value;
     private boolean valid;
     private ListenerHelper<String> listenerHelper;
