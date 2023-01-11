@@ -56,11 +56,6 @@ public class SimpleLongValue implements WritableLongValue, ObservableValue<Long>
     }
 
     @Override
-    public void setValue(Long value) {
-        set(value);
-    }
-
-    @Override
     public String toString() {
         return "SimpleLongValue{" +
                 "value=" + value +

@@ -56,11 +56,6 @@ public class SimpleIntegerValue implements WritableIntegerValue, ObservableValue
     }
 
     @Override
-    public void setValue(Integer value) {
-        set(value);
-    }
-
-    @Override
     public String toString() {
         return "SimpleIntValue{" +
                 "value=" + value +

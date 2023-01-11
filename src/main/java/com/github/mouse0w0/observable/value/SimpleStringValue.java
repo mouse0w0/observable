@@ -56,11 +56,6 @@ public class SimpleStringValue implements WritableStringValue, ObservableValue<S
     }
 
     @Override
-    public void setValue(String value) {
-        set(value);
-    }
-
-    @Override
     public String toString() {
         return "SimpleStringValue{" +
                 "value='" + value + '\'' +

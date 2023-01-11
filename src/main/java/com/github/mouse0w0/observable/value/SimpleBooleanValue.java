@@ -56,11 +56,6 @@ public class SimpleBooleanValue implements WritableBooleanValue, ObservableValue
     }
 
     @Override
-    public void setValue(Boolean value) {
-        set(value);
-    }
-
-    @Override
     public String toString() {
         return "SimpleBooleanValue{" +
                 "value=" + value +

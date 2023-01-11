@@ -54,12 +54,6 @@ public class SimpleFloatValue implements WritableFloatValue, ObservableValue<Flo
             invalidate();
         }
     }
-
-    @Override
-    public void setValue(Float value) {
-        set(value);
-    }
-
     @Override
     public String toString() {
         return "SimpleFloatValue{" +

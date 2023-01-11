@@ -56,11 +56,6 @@ public class SimpleObjectValue<T> implements WritableObjectValue<T>, ObservableV
     }
 
     @Override
-    public void setValue(T value) {
-        set(value);
-    }
-
-    @Override
     public String toString() {
         return "SimpleObjectValue{" +
                 "value=" + value +

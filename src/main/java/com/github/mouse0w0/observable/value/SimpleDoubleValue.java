@@ -56,11 +56,6 @@ public class SimpleDoubleValue implements WritableDoubleValue, ObservableValue<D
     }
 
     @Override
-    public void setValue(Double value) {
-        set(value);
-    }
-
-    @Override
     public String toString() {
         return "SimpleDoubleValue{" +
                 "value=" + value +
