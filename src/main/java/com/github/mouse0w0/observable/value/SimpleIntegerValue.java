@@ -54,11 +54,4 @@ public class SimpleIntegerValue implements WritableIntegerValue, ObservableValue
             invalidate();
         }
     }
-
-    @Override
-    public String toString() {
-        return "SimpleIntegerValue{" +
-                "value=" + value +
-                '}';
-    }
 }

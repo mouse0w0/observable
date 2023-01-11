@@ -20,13 +20,6 @@ public class ReadOnlyStringWrapper extends SimpleStringValue implements Writable
         return readOnlyStringValue;
     }
 
-    @Override
-    public String toString() {
-        return "ReadOnlyStringWrapper{" +
-                "value=" + get() +
-                '}';
-    }
-
     private class ReadOnlyStringValue implements ObservableStringValue {
         @Override
         public String get() {

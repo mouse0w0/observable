@@ -54,11 +54,4 @@ public class SimpleObjectValue<T> implements WritableObjectValue<T>, ObservableV
             invalidate();
         }
     }
-
-    @Override
-    public String toString() {
-        return "SimpleObjectValue{" +
-                "value=" + value +
-                '}';
-    }
 }

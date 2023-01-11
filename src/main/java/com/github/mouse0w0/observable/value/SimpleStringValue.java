@@ -54,11 +54,4 @@ public class SimpleStringValue implements WritableStringValue, ObservableValue<S
             invalidate();
         }
     }
-
-    @Override
-    public String toString() {
-        return "SimpleStringValue{" +
-                "value='" + value + '\'' +
-                '}';
-    }
 }

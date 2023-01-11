@@ -54,11 +54,4 @@ public class SimpleDoubleValue implements WritableDoubleValue, ObservableValue<D
             invalidate();
         }
     }
-
-    @Override
-    public String toString() {
-        return "SimpleDoubleValue{" +
-                "value=" + value +
-                '}';
-    }
 }

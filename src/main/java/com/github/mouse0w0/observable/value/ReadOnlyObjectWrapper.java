@@ -20,13 +20,6 @@ public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements Wr
         return readOnlyObjectValue;
     }
 
-    @Override
-    public String toString() {
-        return "ReadOnlyObjectWrapper{" +
-                "value=" + get() +
-                '}';
-    }
-
     private class ReadOnlyObjectValue implements ObservableObjectValue<T> {
         @Override
         public T get() {

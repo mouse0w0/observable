@@ -19,13 +19,6 @@ public class ReadOnlyIntegerWrapper extends SimpleIntegerValue implements Writab
         return readOnlyIntValue;
     }
 
-    @Override
-    public String toString() {
-        return "ReadOnlyIntegerWrapper{" +
-                "value=" + get() +
-                '}';
-    }
-
     private class ReadOnlyIntegerValue implements ObservableIntegerValue {
         @Override
         public int get() {

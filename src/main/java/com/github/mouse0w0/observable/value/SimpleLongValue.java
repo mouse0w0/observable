@@ -54,11 +54,4 @@ public class SimpleLongValue implements WritableLongValue, ObservableValue<Long>
             invalidate();
         }
     }
-
-    @Override
-    public String toString() {
-        return "SimpleLongValue{" +
-                "value=" + value +
-                '}';
-    }
 }

@@ -19,13 +19,6 @@ public class ReadOnlyLongWrapper extends SimpleLongValue implements WritableValu
         return readOnlyLongValue;
     }
 
-    @Override
-    public String toString() {
-        return "ReadOnlyLongWrapper{" +
-                "value=" + get() +
-                '}';
-    }
-
     private class ReadOnlyLongValue implements ObservableLongValue {
         @Override
         public long get() {

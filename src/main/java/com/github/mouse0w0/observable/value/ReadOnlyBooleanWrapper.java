@@ -19,13 +19,6 @@ public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements Writab
         return readOnlyBooleanValue;
     }
 
-    @Override
-    public String toString() {
-        return "ReadOnlyBooleanWrapper{" +
-                "value=" + get() +
-                '}';
-    }
-
     private class ReadOnlyBooleanValue implements ObservableBooleanValue {
         @Override
         public boolean get() {

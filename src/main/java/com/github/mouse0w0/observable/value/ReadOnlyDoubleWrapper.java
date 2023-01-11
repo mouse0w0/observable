@@ -19,13 +19,6 @@ public class ReadOnlyDoubleWrapper extends SimpleDoubleValue implements Writable
         return readOnlyDoubleValue;
     }
 
-    @Override
-    public String toString() {
-        return "ReadOnlyDoubleWrapper{" +
-                "value=" + get() +
-                '}';
-    }
-
     private class ReadOnlyDoubleValue implements ObservableDoubleValue {
         @Override
         public double get() {

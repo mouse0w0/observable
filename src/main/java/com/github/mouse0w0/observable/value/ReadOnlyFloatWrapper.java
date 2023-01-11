@@ -19,13 +19,6 @@ public class ReadOnlyFloatWrapper extends SimpleFloatValue implements WritableVa
         return readOnlyFloatValue;
     }
 
-    @Override
-    public String toString() {
-        return "ReadOnlyFloatWrapper{" +
-                "value=" + get() +
-                '}';
-    }
-
     private class ReadOnlyFloatValue implements ObservableFloatValue {
         @Override
         public float get() {

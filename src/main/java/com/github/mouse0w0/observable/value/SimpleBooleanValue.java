@@ -54,11 +54,4 @@ public class SimpleBooleanValue implements WritableBooleanValue, ObservableValue
             invalidate();
         }
     }
-
-    @Override
-    public String toString() {
-        return "SimpleBooleanValue{" +
-                "value=" + value +
-                '}';
-    }
 }
