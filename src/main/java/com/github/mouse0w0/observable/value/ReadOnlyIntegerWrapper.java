@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import com.github.mouse0w0.observable.InvalidationListener;
 
-public class ReadOnlyIntegerWrapper extends SimpleIntegerValue implements ReadOnlyWrapper<Integer> {
+public class ReadOnlyIntegerWrapper extends SimpleIntegerValue implements WritableValue<Integer> {
 
     private ReadOnlyIntegerValue readOnlyIntValue;
 
@@ -13,7 +13,6 @@ public class ReadOnlyIntegerWrapper extends SimpleIntegerValue implements ReadOn
         super(value);
     }
 
-    @Override
     public ObservableIntegerValue toReadOnly() {
         if (readOnlyIntValue == null)
             readOnlyIntValue = new ReadOnlyIntegerValue();

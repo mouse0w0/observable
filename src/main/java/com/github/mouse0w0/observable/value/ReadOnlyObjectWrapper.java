@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import com.github.mouse0w0.observable.InvalidationListener;
 
-public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements ReadOnlyWrapper<T> {
+public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements WritableValue<T> {
 
     private ReadOnlyObjectValue readOnlyObjectValue;
 
@@ -13,7 +13,6 @@ public class ReadOnlyObjectWrapper<T> extends SimpleObjectValue<T> implements Re
         super(value);
     }
 
-    @Override
     public ObservableObjectValue<T> toReadOnly() {
         if (readOnlyObjectValue == null) {
             readOnlyObjectValue = new ReadOnlyObjectValue();

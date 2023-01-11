@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import com.github.mouse0w0.observable.InvalidationListener;
 
-public class ReadOnlyLongWrapper extends SimpleLongValue implements ReadOnlyWrapper<Long> {
+public class ReadOnlyLongWrapper extends SimpleLongValue implements WritableValue<Long> {
 
     private ReadOnlyLongValue readOnlyLongValue;
 
@@ -13,7 +13,6 @@ public class ReadOnlyLongWrapper extends SimpleLongValue implements ReadOnlyWrap
         super(value);
     }
 
-    @Override
     public ObservableLongValue toReadOnly() {
         if (readOnlyLongValue == null)
             readOnlyLongValue = new ReadOnlyLongValue();

@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import com.github.mouse0w0.observable.InvalidationListener;
 
-public class ReadOnlyFloatWrapper extends SimpleFloatValue implements ReadOnlyWrapper<Float> {
+public class ReadOnlyFloatWrapper extends SimpleFloatValue implements WritableValue<Float> {
 
     private ReadOnlyFloatValue readOnlyFloatValue;
 
@@ -13,7 +13,6 @@ public class ReadOnlyFloatWrapper extends SimpleFloatValue implements ReadOnlyWr
         super(value);
     }
 
-    @Override
     public ObservableFloatValue toReadOnly() {
         if (readOnlyFloatValue == null)
             readOnlyFloatValue = new ReadOnlyFloatValue();

@@ -2,7 +2,7 @@ package com.github.mouse0w0.observable.value;
 
 import com.github.mouse0w0.observable.InvalidationListener;
 
-public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements ReadOnlyWrapper<Boolean> {
+public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements WritableValue<Boolean> {
 
     private ReadOnlyBooleanValue readOnlyBooleanValue;
 
@@ -13,7 +13,6 @@ public class ReadOnlyBooleanWrapper extends SimpleBooleanValue implements ReadOn
         super(value);
     }
 
-    @Override
     public ObservableBooleanValue toReadOnly() {
         if (readOnlyBooleanValue == null)
             readOnlyBooleanValue = new ReadOnlyBooleanValue();
